@@ -44,6 +44,24 @@ Where “tuple” is the return value, as the tuple (function_value, gradient).
 The user can continue to evaluate different functions using the same instance of an AD object by passing different functions to the “evaluate” method defined above.
 
 # Software Organization
+### Preliminary Directory Structure:
+    jeeautodiff/
+	    build/
+		    lib/
+	    jeeautodiff/
+		    tests/
+        dist/
+        jeeautodiff_pkg.egg-info/
+        .gitignore
+        .travis.yml
+        LICENSE
+        README.md
+        setup.config
+        setup.py
+
+
+
+
 
 # Implementation
 ### Core Data Structures
