@@ -29,7 +29,7 @@ Passing a “3” into the instance then requires the user to initiate 3 variabl
 For example:
 ```a.create_variable({‘x’: ‘3’, ‘y’: ‘0’, ‘z’: ‘5’})```
 
-If the user creates more variables than what is specified in this class instance, the package will raise an exception.
+*If the user creates more variables than what is specified in this class instance, the package will raise an exception.*
 ### Evaluating Functions
 After initiating variables, the user can pass the function they want to evaluate to the “evaluate” method which returns a tuple of its value and gradient. Here is an example:
 
@@ -39,7 +39,7 @@ Suppose user wants to pass in $exp(x)+(sin(x-y))^{2}$  they will need to do:
 
 Where “tuple” is the return value, as the tuple (function_value, gradient).
 
-If the user pass some variables that are not being initialized, the evaluate function will raise an Attribute error.
+*If the user passes variables that have not been initialized, the evaluate function will raise an Attribute error.*
 The user can continue to evaluate different functions using the same instance of an AD object by passing different functions to the “evaluate” method defined above.
 
 # Software Organization
