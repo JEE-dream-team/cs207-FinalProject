@@ -44,7 +44,7 @@ Where “tuple” is the return value, as the tuple (function_value, gradient).
 The user can continue to evaluate different functions using the same instance of an AD object by passing different functions to the “evaluate” method defined above.
 
 # Software Organization
-### Directory Structure:
+### Directory Structure
     jeeautodiff/
         build/
             lib/
