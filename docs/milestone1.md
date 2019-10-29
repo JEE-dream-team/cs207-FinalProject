@@ -44,14 +44,30 @@ Where “tuple” is the return value, as the tuple (function_value, gradient).
 The user can continue to evaluate different functions using the same instance of an AD object by passing different functions to the “evaluate” method defined above.
 
 # Software Organization
-### Preliminary Directory Structure:
+### Directory Structure:
     jeeautodiff/
-	    build/
-		    lib/
-	    jeeautodiff/
-		    tests/
+        build/
+            lib/
+            ...
+        docs/
+            milestone1.md
+            ...
+        jeeautodiff/
+            __init__.py
+            jeeautodiff.py
+            tests/
+                __init__.py
+                test_integration.py
+                test_module1.py
+                ...
         dist/
+            jeeautodiff_pkg-0.0.1-py3-none-any.whl
+            Jeeautodiff_pkg-0.0.1.tar.gz
         jeeautodiff_pkg.egg-info/
+            Dependency_links.txt
+            PKG-INFO
+            SOURCES.txt
+            top_level.txt
         .gitignore
         .travis.yml
         LICENSE
@@ -59,9 +75,17 @@ The user can continue to evaluate different functions using the same instance of
         setup.config
         setup.py
 
+### Modules and Functionality
+jeeautodiff.py will be the module in our package that contains the autodiff class, which will take user inputs and handle automatic differentiation.
 
+### Testing Suite
+We will use TravisCI to test continuous integration and CodeCov to test for code coverage. The test suites themselves will be contained in modules in the "tests" directory.
 
+### Distribution
+We will use the Python Packaging index (PyPI) to distribute the python library. 
 
+### Packaging
+We will use Python Eggs to package our software. It will allow users to easily install, uninstall, and/or upgrade the package.
 
 # Implementation
 ### Core Data Structures
@@ -75,3 +99,4 @@ Our class will have two class attributes, function value as “val” and gradie
 We will rely on numpy to define our own elementary functions. We may also include scipy and sklearn for test purposes.
 ### Elementary Functions
 We will redefine all of the elementary functions in our package. They should take our Node instance as an input and return a Node instance with the updated value and gradient. We will still rely on numpy to get the true value of these operations but we will also manually calculate their derivatives and update the gradient values like what we have done in the forward mode graph.
+
