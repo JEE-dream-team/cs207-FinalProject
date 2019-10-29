@@ -14,20 +14,20 @@ Mathematically, the forward mode is equivalent to conducting a set of operations
 ### Importing the package
 Users will import the AD package as a python library using:
 
-'pip install jeeautodiff'
+```pip install jeeautodiff```
 
 And then they can just import them as usual in python:
 
-'import jeeautodiff as ad'
+```import jeeautodiff as ad```
 ### Instantiating AD objects
 Users will instantiate AD objects by creating instances of the relevant class and passing variables into the methods of that instance. They need to specify the number of variables they want to use in the AD object. For example:
 
-'a=ad.autodiff(3)'
+```a=ad.autodiff(3)```
 
 Passing a “3” into the instance then requires the user to initiate 3 variables as a dictionary. 
 
 For example:
-'a.create_variable({‘x’: ‘3’, ‘y’: ‘0’, ‘z’: ‘5’})'
+```a.create_variable({‘x’: ‘3’, ‘y’: ‘0’, ‘z’: ‘5’})```
 
 If the user creates more variables than what is specified in this class instance, the package will raise an exception.
 ### Evaluating Functions
@@ -35,7 +35,7 @@ After initiating variables, the user can pass the function they want to evaluate
 
 Suppose user wants to pass in $exp(x)+(sin(x-y))^{2}$  they will need to do:
 
-'tuple = a.evaluate(exp(x)+(sin(x-y))**2)'
+```tuple = a.evaluate(exp(x)+(sin(x-y))**2)```
 
 Where “tuple” is the return value, as the tuple (function_value, gradient).
 
