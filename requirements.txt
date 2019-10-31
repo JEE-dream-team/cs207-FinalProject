@@ -1,0 +1,1 @@
+-e git://github.com/JEE-dream-team/cs207-FinalProject.git#egg=jeeautodiff
