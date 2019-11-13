@@ -1,5 +1,5 @@
 import pytest
-from src.autodiff import autodiff
+from jeeautodiff.autodiff import autodiff
 
 def test_add():
     x = autodiff(2.0) + autodiff(1.0)
