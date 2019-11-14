@@ -1,7 +1,8 @@
 import pytest
-from jeeautodiff.autodiff import autodiff
+from jeeautodiff.autodiff import *
 
 def test_add():
-    x = autodiff(2.0) + autodiff(1.0)
-    y = autodiff(3.0)
+    x = Node(2.0) + Node(1.0)
+    y = Node(3.0)
     assert(x == y)
+
