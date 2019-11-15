@@ -22,7 +22,7 @@ def cos(N):
 
     try:
         float(N)
-        return -np.sin(N)
+        return np.cos(N)
     except:
         raise ValueError("{}should either be a Node instance or a number".format(N))
 
@@ -52,13 +52,13 @@ def exp(N):
 
 def log(N):
     if isinstance(N,Node):
-        val=np.exp(N.val)
-        der=np.exp(N.val)*N.der
+        val=np.log(N.val)
+        der=1/N.val*N.der
         return Node(val,der)
 
     try:
         float(N)
-        return np.exp(N)
+        return np.log(N)
     except:
         raise ValueError("{}should either be a Node instance or a number".format(N))
 
