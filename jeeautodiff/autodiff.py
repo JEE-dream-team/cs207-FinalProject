@@ -68,9 +68,11 @@ class Node:
             or isinstance(other, Node)
         ):
             try:
-                return Node(self.val * other.val, self.der * other.der)
+                return Node(
+                    self.val * other.val, self.der * other.val + self.val * other.der
+                )
             except AttributeError:
-                return Node(self.val * other, self.der)
+                return Node(self.val * other, self.der * other)
         else:
             raise ValueError("inputs should either be Node instances, ints, or floats")
 
@@ -81,15 +83,19 @@ class Node:
             or isinstance(other, Node)
         ):
             try:
-                return Node(self.val / other.val, self.der / other.der)
+                numerator = self.der * other.val - self.val * other.der
+                denominator = other.val * other.val
+                return Node(self.val / other.val, numerator / denominator)
             except AttributeError:
-                return Node(self.val / other, self.der)
+                numerator = self.der * other
+                denominator = other * other
+                return Node(self.val / other, numerator / denominator)
         else:
             raise ValueError("inputs should either be Node instances, ints, or floats")
 
     def __pow__(self, other):
         if isinstance(other, int) or isinstance(other, float):
-            return Node(self.val ** other, self.der ** other)
+            return Node(self.val ** other, self.der * self.val + self.val * self.der)
         else:
             raise ValueError("power input should be an int or a float")
 
