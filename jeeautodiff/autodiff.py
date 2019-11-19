@@ -32,6 +32,10 @@ class Node:
     def der(self):
         return self._der
 
+    def __repr__(self):
+
+        return "ad.Node(val={},der={})".format(self.val, self.der)
+
     def __add__(self, other):
         if (
             isinstance(other, int)
@@ -75,7 +79,6 @@ class Node:
         if (
             isinstance(other, int)
             or isinstance(other, float)
-            or isinstance(other, Node)
         ):
             return Node(other - self.val, -self.der)
         else:
@@ -100,7 +103,6 @@ class Node:
         if (
             isinstance(other, int)
             or isinstance(other, float)
-            or isinstance(other, Node)
         ):
             return Node(self.val * other, self.der * other)
         else:
@@ -123,9 +125,12 @@ class Node:
         else:
             raise ValueError("inputs should either be Node instances, ints, or floats")
 
+    def __rtruediv__(self, other):
+        return other*(self**(-1))
+
     def __pow__(self, other):
         if isinstance(other, int) or isinstance(other, float):
-            return Node(self.val ** other, self.der * self.val + self.val * self.der)
+            return Node(self.val ** other, other*(self.val**(other-1))*self.der)
         else:
             raise ValueError("power input should be an int or a float")
 
