@@ -77,7 +77,7 @@ class Node:
             or isinstance(other, float)
             or isinstance(other, Node)
         ):
-            return Node(other - self.val, self.der)
+            return Node(other - self.val, -self.der)
         else:
             raise ValueError("inputs should either be Node instances, ints, or floats")
 
