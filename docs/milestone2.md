@@ -61,9 +61,9 @@ They can then create variable by calling the create_variable(val,der) method, if
 ### Evaluating Functions
 After initiating variables, the user can pass the function they want to evaluate to the “eval” method which returns a tuple of its value and gradient. Here is an example:
 
-Suppose user wants to pass in $exp(x)+(sin(x-y))^{2}$  they will need to do:
+Suppose user wants to pass in $exp(x)+(sin(x))^{2}$  they will need to do:
 
-```tuple = a.eval(exp(x)+(sin(x-y))**2)```
+```tuple = a.eval(exp(x)+(sin(x))**2)```
 
 Where “tuple” is the return value, as the tuple (function_value, gradient).
 
