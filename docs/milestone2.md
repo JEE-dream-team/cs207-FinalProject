@@ -54,7 +54,7 @@ Passing a “3” into the instance allowes the user to initiate at most 3 varia
 
 They can then create variable by calling the create_variable(val,der) method, if you do not specify derivatives, the default value will be 1.Create_variable function will return a varaible that you can use later in the function
 
-```x=a.create_variable()```
+```x=a.create_variable(3)```
 
 *If the user creates more variables than what is specified in this class instance, an error will be raised*
 
