@@ -45,6 +45,16 @@ class Node:
         else:
             raise ValueError("inputs should either be Node instances, ints, or floats")
 
+    def __radd__(self, other):
+        if (
+            isinstance(other, int)
+            or isinstance(other, float)
+            or isinstance(other, Node)
+        ):
+            return Node(self.val + other, self.der)
+        else:
+            raise ValueError("inputs should either be Node instances, ints, or floats")
+
     def __eq__(self, other):
         return self.val == other.val and self.der == other.der
 
@@ -61,6 +71,16 @@ class Node:
         else:
             raise ValueError("inputs should either be Node instances, ints, or floats")
 
+    def __rsub__(self, other):
+        if (
+            isinstance(other, int)
+            or isinstance(other, float)
+            or isinstance(other, Node)
+        ):
+            return Node(other - self.val, self.der)
+        else:
+            raise ValueError("inputs should either be Node instances, ints, or floats")
+
     def __mul__(self, other):
         if (
             isinstance(other, int)
@@ -73,6 +93,16 @@ class Node:
                 )
             except AttributeError:
                 return Node(self.val * other, self.der * other)
+        else:
+            raise ValueError("inputs should either be Node instances, ints, or floats")
+
+    def __rmul__(self, other):
+        if (
+            isinstance(other, int)
+            or isinstance(other, float)
+            or isinstance(other, Node)
+        ):
+            return Node(self.val * other, self.der * other)
         else:
             raise ValueError("inputs should either be Node instances, ints, or floats")
 
