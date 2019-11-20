@@ -21,30 +21,49 @@ Mathematically, the forward mode is equivalent to conducting a set of operations
  
 # How to Use PackageName
 ### Importing the package
-Users will import the AD package as a python library using:
+After we distributed our pacakage via Pypi, Users will install the AD package as a python library using:
 
 ```pip install jeeautodiff```
+
+However, in milestone2, user will clone it via git:
+
+```git clone https://github.com/JEE-dream-team/cs207-FinalProject.git```
+
+They should then go in to the directory and create a new virtual environment by:
+
+```conda create -n env_name python=3.6 anaconda```
+
+Activate your environment:
+
+```source activate env_name```
+
+Install the dependencies using
+
+```pip install -r requirements.txt```
+
 
 And then they can just import them as usual in python:
 
 ```import jeeautodiff as ad```
 ### Instantiating AD objects
-Users will instantiate AD objects by creating instances of the relevant class and passing variables into the methods of that instance. They need to specify the number of variables they want to use in the AD object. For example:
+Users will instantiate AD objects by creating instances of the relevant class and passing variables into the methods of that instance. They need to specify the number of variables they want to use in the AD object,that will specify the shape of the gradient.The default number is one. However, in milestone2, we only consider one variable For example:
 
 ```a=ad.autodiff(3)```
 
-Passing a “3” into the instance then requires the user to initiate 3 variables as a dictionary. For example:
+Passing a “3” into the instance allowes the user to initiate at most 3 variables in this autodiff instance.
 
-```a.create_variable({‘x’: ‘3’, ‘y’: ‘0’, ‘z’: ‘5’})```
+They can then create variable by calling the create_variable(val,der) method, if you do not specify derivatives, the default value will be 1.Create_variable function will return a varaible that you can use later in the function
+
+```x=a.create_variable(3)```
 
 *If the user creates more variables than what is specified in this class instance, an error will be raised*
 
 ### Evaluating Functions
-After initiating variables, the user can pass the function they want to evaluate to the “evaluate” method which returns a tuple of its value and gradient. Here is an example:
+After initiating variables, the user can pass the function they want to evaluate to the “eval” method which returns a tuple of its value and gradient. Here is an example:
 
-Suppose user wants to pass in $exp(x)+(sin(x-y))^{2}$  they will need to do:
+Suppose user wants to pass in $exp(x)+(sin(x))^{2}$  they will need to do:
 
-```tuple = a.evaluate(exp(x)+(sin(x-y))**2)```
+```tuple = a.eval(exp(x)+(sin(x))**2)```
 
 Where “tuple” is the return value, as the tuple (function_value, gradient).
 
@@ -101,15 +120,24 @@ We will use Python Eggs to package our software. It will allow users to easily i
 We will use numpy.ndarray as our core data structures in our Node class to store the gradient values. The primary reason is that it is easy to pre-define the dimension of the gradient after the user specifies how many variables they will have in the function. In addition, numpy.ndarrays are more computationally efficient than some other data structures like python lists and operate smoothly with all numpy operations.
 
 ### Class Implementation
-First , we will implement an autodiff class which allows the user to specify the number of variables they want to pass in, initiate values of different variables and run the class’s methods on the variables. We will also implement a class called “Node” to represent the node in the forward mode.
-Similar to the dual class we implemented in lecture, each node has its own function and gradient value. In the node class, we will overwrite the dunder methods like add, multiply, power, and divide to support these operations between our Node instances. We will overwrite all elementary functions in our package so each of them can take our Node instances as inputs, and return a new dual class instance with the updated function value and gradient value.
+We implemented dunder methods in a Node class to represent the node in forward mode. This main class is initiated with two attributes: val (for value) and der (for derivative), where val is required but der is optional. Standard dunder methods will be re-written within the AD class: __add__, __radd__, __mul__, __rmul__, __pow__, __sub__, __rsub__, __truediv__, __rtruediv__, __abs__, __neg__, __eq__, __repr__.
+
+Additionally, we implemented a utility file to handle all other elementary functions such as sin, cos, etc.
 
 ### Class Method and Name Attributes
-Our class will have two class attributes, function value as “val” and gradient as “grad”. We will overwrite all the dunder methods like add, multiply, divide and power.
+Our Node class has two class attributes: Function value as “val” and derivative as “der”. We overwrote all the dunder methods like add, multiply, divide and power, and their "radd" reverse equivalents, to support those operations for our Node class's values and derivatives.
 
 ### External Dependencies 
-We will rely on numpy to define our own elementary functions. We may also include scipy and sklearn for test purposes.
+We are relying on numpy to define some of our own elementary functions. We may also include scipy and sklearn for test purposes (for the testingroot finding algorithm later).
 
 ### Elementary Functions
-We will redefine all of the elementary functions in our package. They should take our Node instance as an input and return a Node instance with the updated value and gradient. We will still rely on numpy to get the true value of these operations but we will also manually calculate their derivatives and update the gradient values like what we have done in the forward mode graph.
+We redefined all of the elementary functions in our package. They take our Node instance as an input and return a Node instance with the updated value and gradient. We still rely on numpy to get the true value of these operations but we also manually calculate their derivatives and update the gradient values like what we did in the forward mode graph.
+
+### Aspects not implemented
+
+We have not yet implemented the vector input and vector function input. For vector input, our plan is to add a dimension variable to the constructor of our Node class so that the derivative will be initialized as an numpy array of the dimension we specified. suppose dimension is d which means we have d variables. The gradient will be a numpy array of shape(d,1). For vector function input to evaluated, we will just change our evaluate function in class autodiff to handle a list of function inputs and evaluate all functions in the list
+
+# Future Features
+Next, we plan next to implement reverse-mode automatic differentation. Also known as back-propagation, reverse-mode AD is foundational to neural nets. Generally, reverse-mode is straightforward to implement and understand, but is not as efficient on memory. We need to extend the AD class functionality and build out additional documentation.
+
 
