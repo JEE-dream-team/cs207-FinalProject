@@ -125,17 +125,17 @@ We implemented dunder methods in a Node class to represent the node in forward m
 Additionally, we implemented a utility file to handle all other elementary functions such as sin, cos, etc.
 
 ### Class Method and Name Attributes
-Our class will have two class attributes, function value as “val” and derivative as “der”. We will overwrite all the dunder methods like add, multiply, divide and power.
+Our Node class has two class attributes: Function value as “val” and derivative as “der”. We overwrote all the dunder methods like add, multiply, divide and power, and their "radd" reverse equivalents, to support those operations for our Node class's values and derivatives.
 
 ### External Dependencies 
-We will rely on numpy to define our own elementary functions. We may also include scipy and sklearn for test purposes (for testingroot finding algorithm later).
+We are relying on numpy to define some of our own elementary functions. We may also include scipy and sklearn for test purposes (for the testingroot finding algorithm later).
 
 ### Elementary Functions
-We will redefine all of the elementary functions in our package. They should take our Node instance as an input and return a Node instance with the updated value and gradient. We will still rely on numpy to get the true value of these operations but we will also manually calculate their derivatives and update the gradient values like what we have done in the forward mode graph.
+We redefined all of the elementary functions in our package. They take our Node instance as an input and return a Node instance with the updated value and gradient. We still rely on numpy to get the true value of these operations but we also manually calculate their derivatives and update the gradient values like what we did in the forward mode graph.
 
 ### Aspects not implemented
 
-We did not implement the vector input and vector function input. For vector input, our plan is to add a dimension variable to the constructor of our Node class so that the derivative will be initialized as an numpy array of the dimension we specified. suppose dimension is d which means we have d variables. The gradient will be a numpy array of shape(d,1). For vector function input to evaluated, we will just change our evaluate function in class autodiff to handle a list of function inputs and evaluate all functions in the list
+We have not yet implemented the vector input and vector function input. For vector input, our plan is to add a dimension variable to the constructor of our Node class so that the derivative will be initialized as an numpy array of the dimension we specified. suppose dimension is d which means we have d variables. The gradient will be a numpy array of shape(d,1). For vector function input to evaluated, we will just change our evaluate function in class autodiff to handle a list of function inputs and evaluate all functions in the list
 
 # Future Features
 Next, we plan next to implement reverse-mode automatic differentation. Also known as back-propagation, reverse-mode AD is foundational to neural nets. Generally, reverse-mode is straightforward to implement and understand, but is not as efficient on memory. We need to extend the AD class functionality and build out additional documentation.
