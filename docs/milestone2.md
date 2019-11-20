@@ -120,14 +120,15 @@ We will use Python Eggs to package our software. It will allow users to easily i
 We will use numpy.ndarray as our core data structures in our Node class to store the gradient values. The primary reason is that it is easy to pre-define the dimension of the gradient after the user specifies how many variables they will have in the function. In addition, numpy.ndarrays are more computationally efficient than some other data structures like python lists and operate smoothly with all numpy operations.
 
 ### Class Implementation
+We implemented dunder methods in a Node class to represent the node in forward mode. This main class is initiated with two attributes: val (for value) and der (for derivative), where val is required but der is optional. Standard dunder methods will be re-written within the AD class: __add__, __radd__, __mul__, __rmul__, __pow__, __sub__, __rsub__, __truediv__, __rtruediv__, __abs__, __neg__, __eq__, __repr__.
 
-We implemented dunder methods in a Node class to represent the node in forward mode. This main class is initiated with three attributes: val (for value), der (for derivative), and self. Additionally, we implemented a utility file to handle all other elementary functions such as sin, cos, etc.
+Additionally, we implemented a utility file to handle all other elementary functions such as sin, cos, etc.
 
 ### Class Method and Name Attributes
-Our class will have two class attributes, function value as “val” and gradient as “grad”. We will overwrite all the dunder methods like add, multiply, divide and power.
+Our class will have two class attributes, function value as “val” and derivative as “der”. We will overwrite all the dunder methods like add, multiply, divide and power.
 
 ### External Dependencies 
-We will rely on numpy to define our own elementary functions. We may also include scipy and sklearn for test purposes(for testingroot finding algorithm later).
+We will rely on numpy to define our own elementary functions. We may also include scipy and sklearn for test purposes (for testingroot finding algorithm later).
 
 ### Elementary Functions
 We will redefine all of the elementary functions in our package. They should take our Node instance as an input and return a Node instance with the updated value and gradient. We will still rely on numpy to get the true value of these operations but we will also manually calculate their derivatives and update the gradient values like what we have done in the forward mode graph.
