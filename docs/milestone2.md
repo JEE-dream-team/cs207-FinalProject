@@ -120,8 +120,9 @@ We will use Python Eggs to package our software. It will allow users to easily i
 We will use numpy.ndarray as our core data structures in our Node class to store the gradient values. The primary reason is that it is easy to pre-define the dimension of the gradient after the user specifies how many variables they will have in the function. In addition, numpy.ndarrays are more computationally efficient than some other data structures like python lists and operate smoothly with all numpy operations.
 
 ### Class Implementation
-First , we will implement an autodiff class which allows the user to specify the number of variables they want to pass in, initiate values of different variables and run the class’s methods on the variables. We will also implement a class called “Node” to represent the node in the forward mode.
-Similar to the dual class we implemented in lecture, each node has its own function and gradient value. In the node class, we will overwrite the dunder methods like add, multiply, power, and divide to support these operations between our Node instances. We will overwrite all elementary functions in our package so each of them can take our Node instances as inputs, and return a new dual class instance with the updated function value and gradient value.
+Just talk about we redo our dunder methods in our node class and also import a utility file to handle all other elementary functions like sin,cos etc. I think that will be fine
+
+We implemented dunder methods in a "Node" class to represent the node in forward mode. Additionally, we implemented a utility file in a unary class to handle all other elementary functions such as sin, cos, etc.
 
 ### Class Method and Name Attributes
 Our class will have two class attributes, function value as “val” and gradient as “grad”. We will overwrite all the dunder methods like add, multiply, divide and power.
@@ -136,6 +137,7 @@ We will redefine all of the elementary functions in our package. They should tak
 
 We did not implement the vector input and vector function input. For vector input, our plan is to add a dimension variable to the constructor of our Node class so that the derivative will be initialized as an numpy array of the dimension we specified. suppose dimension is d which means we have d variables. The gradient will be a numpy array of shape(d,1). For vector function input to evaluated, we will just change our evaluate function in class autodiff to handle a list of function inputs and evaluate all functions in the list
 
-#Future Feature
-Newton's method?
+# Future Features
+Next, we plan next to implement reverse-mode automatic differentation. Also known as back-propagation, reverse-mode AD is foundational to neural nets. Generally, reverse-mode is straightforward to implement and understand, but is not as efficient on memory. We need to extend the AD class functionality and build out additional documentation.
+
 
