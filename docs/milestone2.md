@@ -120,7 +120,6 @@ We will use Python Eggs to package our software. It will allow users to easily i
 We will use numpy.ndarray as our core data structures in our Node class to store the gradient values. The primary reason is that it is easy to pre-define the dimension of the gradient after the user specifies how many variables they will have in the function. In addition, numpy.ndarrays are more computationally efficient than some other data structures like python lists and operate smoothly with all numpy operations.
 
 ### Class Implementation
-Just talk about we redo our dunder methods in our node class and also import a utility file to handle all other elementary functions like sin,cos etc. I think that will be fine
 
 We implemented dunder methods in a "Node" class to represent the node in forward mode. Additionally, we implemented a utility file in a unary class to handle all other elementary functions such as sin, cos, etc.
 
