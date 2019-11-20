@@ -121,7 +121,7 @@ We will use numpy.ndarray as our core data structures in our Node class to store
 
 ### Class Implementation
 
-We implemented dunder methods in a "Node" class to represent the node in forward mode. Additionally, we implemented a utility file in a unary class to handle all other elementary functions such as sin, cos, etc.
+We implemented dunder methods in a Node class to represent the node in forward mode. This main class is initiated with three attirubutes: val (for value), der (for derivative), and self. Additionally, we implemented a utility file to handle all other elementary functions such as sin, cos, etc.
 
 ### Class Method and Name Attributes
 Our class will have two class attributes, function value as “val” and gradient as “grad”. We will overwrite all the dunder methods like add, multiply, divide and power.
