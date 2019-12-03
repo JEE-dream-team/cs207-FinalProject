@@ -62,26 +62,32 @@ class Autodiff:
 
 
     def eval(self, N):  # evaluate
+        #single function case
         if isinstance(N,Node):
             try:
                 return (N.val, N.der)
             except:
                 gradient = np.zeros([self.dimension, ])
                 return (N, gradient)
+        #vector of function, user should pass in a vector of functions as a list of functions
         if type(N) is list:
             return_val=[]
+            #specify shape of jacobian
             return_jacobian=np.empty([0,self.dimension])
+            #loop through each function in the list
             for i in N:
+                #if the function has derivative
                 if isinstance(i,Node):
                     return_val.append(i.val)
                     gradient=i.der.reshape(1,self.dimension)
                     return_jacobian=np.concatenate((return_jacobian,gradient),axis=0)
+                #if the function is just a scalar
                 else:
                     return_val.append(i)
                     gradient = np.zeros([1,self.dimension])
                     return_jacobian = np.concatenate((return_jacobian, gradient), axis=0)
 
-            return (return_val,return_jacobian)
+            return (np.array(return_val),return_jacobian)
         else:
             raise Exception("Should pass a function or a vector of function into eval")
 
