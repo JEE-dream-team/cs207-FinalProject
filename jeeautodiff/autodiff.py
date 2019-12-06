@@ -133,9 +133,6 @@ class Node:
         else:
             raise ValueError("inputs should either be Node instances, ints, or floats")
 
-    def __eq__(self, other):
-        return self.val == other.val and self.der == other.der
-
     def __sub__(self, other):
         if (
             isinstance(other, int)
@@ -210,3 +207,15 @@ class Node:
 
     def __neg__(self):
         return Node(-self.val, -self.der)
+
+    def __eq__(self, other):
+        return self.val == other.val and self.der == other.der
+
+    def __ne__(self, other):
+        return self.val != other.val or self.der != other.der
+
+
+
+
+    
+

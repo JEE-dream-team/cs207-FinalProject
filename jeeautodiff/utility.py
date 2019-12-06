@@ -67,4 +67,114 @@ def log(N):
         raise ValueError("{}should either be a Node instance or a number".format(N))
 
 
-# print(sin(Node(2,3)).der)
+def arcsin(N):
+    if isinstance(N, Node):
+        if N.val > 1 or N.val < -1 or N.der > 1 or N.der < -1:
+            raise ValueError("{} should have values and derivatives -1 <= x <= 1 for arcsin use".format(N))
+        val = np.arcsin(N.val)
+        der = (1 / np.sqrt(1 - N.val**2)) * N.der
+        return Node(val, der)
+
+    try:
+        float(N)
+        return np.arcsin(N)
+    except:
+        raise ValueError("{}should either be a Node instance or a number".format(N))
+   
+
+def arccos(N):
+    if isinstance(N, Node):
+        if N.val > 1 or N.val < -1 or N.der > 1 or N.der < -1:
+            raise ValueError("{} should have values and derivatives -1 <= x <= 1 for arccos use".format(N))
+        val = np.arccos(N.val)
+        der = (-1 / np.sqrt(1 - N.val**2)) * N.der
+        return Node(val, der)
+
+    try:
+        float(N)
+        return np.arccos(N)
+    except:
+        raise ValueError("{}should either be a Node instance or a number".format(N))
+
+
+def arctan(N):
+    if isinstance(N, Node):
+        val = np.arctan(N.val)
+        der = 1 / (N.val**2 + 1) * N.der
+        return Node(val, der)
+
+    try:
+        float(N)
+        return np.arctan(N)
+    except:
+        raise ValueError("{}should either be a Node instance or a number".format(N))
+
+
+def sinh(N):
+    if isinstance(N, Node):
+        val = np.sinh(N.val)
+        der = np.cosh(N.val) * N.der
+        return Node(val, der)
+
+    try:
+        float(N)
+        return np.sinh(N)
+    except:
+        raise ValueError("{}should either be a Node instance or a number".format(N))
+
+
+def cosh(N):
+    if isinstance(N, Node):
+        val = np.cosh(N.val)
+        der = np.sinh(N.val) * N.der
+        return Node(val, der)
+
+    try:
+        float(N)
+        return np.cosh(N)
+    except:
+        raise ValueError("{}should either be a Node instance or a number".format(N))
+
+
+def tanh(N):
+    if isinstance(N, Node):
+        val = np.tanh(N.val)
+        der = (1 / np.cosh(N.val) ** 2) * N.der
+        return Node(val, der)
+
+    try:
+        float(N)
+        return np.tanh(N)
+    except:
+        raise ValueError("{}should either be a Node instance or a number".format(N))
+
+
+def sqrt(N):
+    if isinstance(N, Node):
+        val = np.sqrt(N.val)
+        der = 0.5 * (N.val ** -0.5) * N.der
+        return Node(val, der)
+
+    try:
+        float(N)
+        return np.sqrt(N)
+    except:
+        raise ValueError("{}should either be a Node instance or a number".format(N))
+
+
+def logistic(N):
+    if isinstance(N, Node):
+        val = np.exp(N.val) / (np.exp(N.val) + 1)
+        der = ( np.exp(-N.val) / (1+np.exp(-N.val))**2 ) * N.der
+        return Node(val, der)
+
+    try:
+        float(N)
+        return np.exp(N) / (np.exp(N) + 1)
+    except:
+        raise ValueError("{}should either be a Node instance or a number".format(N))
+
+
+
+
+

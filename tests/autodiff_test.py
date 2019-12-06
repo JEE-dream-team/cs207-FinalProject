@@ -13,12 +13,6 @@ def test_add():
         x+"1"
 
 
-def test_equal():
-    x = ad.Node(2.0) + ad.Node(1.0)
-    y = ad.Node(3.0, 2.0)
-    assert x == y
-
-
 def test_sub():
     x = ad.Node(5.0) - ad.Node(3)
     assert x.val == 2
@@ -94,9 +88,23 @@ def test_rtruediv():
     with pytest.raises(ValueError):
         "1"/x
 
-
-
 def test_neg():
     x = -ad.Node(5.0)
     assert x.val == -5
     assert x.der == -1
+
+def test_equal():
+    x = ad.Node(2.0) + ad.Node(1.0)
+    y = ad.Node(3.0, 2.0)
+    assert x == y
+
+def test_not_equal_num():
+    x = ad.Node(2.0) + 2
+    y = ad.Node(4.0, 2.0)
+    assert x != y
+
+def test_not_equal_node():
+    x = ad.Node(2.0) + ad.Node(4.0)
+    y = ad.Node(1.0, 2.0)
+    assert x != y
+

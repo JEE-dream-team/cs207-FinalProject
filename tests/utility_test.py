@@ -61,3 +61,105 @@ def test_log():
     assert x == 0
     with pytest.raises(ValueError):
         ad.log("1")
+
+
+def test_arcsin():
+    x = ad.Node(0.5, 0.5)
+    x = ad.arcsin(x)
+    assert x.val == np.arcsin(0.5)
+    assert x.der == (1 / np.sqrt(0.75)) * 0.5
+
+    x = ad.arcsin(1)
+    assert x == np.arcsin(1)
+
+    with pytest.raises(ValueError):
+        ad.arcsin("1")
+
+
+def test_arccos():
+    x = ad.Node(0.5, 0.5)
+    x = ad.arccos(x)
+    assert x.val == np.arccos(0.5)
+    assert x.der == (-1 / np.sqrt(0.75)) * 0.5
+
+    x = ad.arccos(1)
+    assert x == np.arccos(1)
+
+    with pytest.raises(ValueError):
+        ad.arccos("1")
+
+
+def test_arctan():
+    x = ad.Node(2)
+    x = ad.arctan(x)
+    assert x.val == np.arctan(2)
+    assert x.der == 0.2
+
+    x = ad.arctan(2)
+    assert x == np.arctan(2)
+
+    with pytest.raises(ValueError):
+        ad.arctan("1")
+
+
+def test_sinh():
+    x = ad.Node(2)
+    x = ad.sinh(x)
+    assert x.val == np.sinh(2)
+    assert x.der == np.cosh(2)
+
+    x = ad.sinh(2)
+    assert x == np.sinh(2)
+
+    with pytest.raises(ValueError):
+        ad.sinh("1")
+
+def test_cosh():
+    x = ad.Node(2)
+    x = ad.cosh(x)
+    assert x.val == np.cosh(2)
+    assert x.der == np.sinh(2)
+
+    x = ad.cosh(2)
+    assert x == np.cosh(2)
+
+    with pytest.raises(ValueError):
+        ad.cosh("1")
+
+def test_tanh():
+    x = ad.Node(2)
+    x = ad.tanh(x)
+    assert x.val == np.tanh(2)
+    assert x.der == 1 / (np.cosh(2)**2)
+
+    x = ad.tanh(2)
+    assert x == np.tanh(2)
+
+    with pytest.raises(ValueError):
+        ad.tanh("1")
+
+def test_sqrt():
+    x = ad.Node(4)
+    x = ad.sqrt(x)
+    assert x.val == 2
+    assert x.der == 0.25
+
+    x = ad.sqrt(4)
+    assert x == np.sqrt(4)
+
+    with pytest.raises(ValueError):
+        ad.sqrt("1")
+
+def test_logistic():
+    x = ad.Node(2)
+    x = ad.logistic(x)
+    assert x.val == np.exp(2) / (np.exp(2) + 1)
+    assert x.der == np.exp(-2) / ((1 + np.exp(-2)) ** 2) 
+
+    x = ad.logistic(2)
+    assert x == np.exp(2) / (np.exp(2) + 1)
+
+    with pytest.raises(ValueError):
+        ad.logistic("1")
+
+
