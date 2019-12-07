@@ -39,7 +39,7 @@ class Reverse_mode:
                     ls.append(i.grad)
                 for k in root_node:
                     k.reset()
-                return [f.val.np.array(ls)]
+                return [f.val,np.array(ls)]
             else:
                 grad=Node_ls.grad
                 for k in root_node:
