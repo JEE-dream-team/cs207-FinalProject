@@ -69,7 +69,7 @@ def log(N):
 
 def arcsin(N):
     if isinstance(N, Node):
-        if N.val > 1 or N.val < -1 or N.der > 1 or N.der < -1:
+        if N.val > 1 or N.val < -1:
             raise ValueError("{} should have values and derivatives -1 <= x <= 1 for arcsin use".format(N))
         val = np.arcsin(N.val)
         der = (1 / np.sqrt(1 - N.val**2)) * N.der
@@ -84,7 +84,7 @@ def arcsin(N):
 
 def arccos(N):
     if isinstance(N, Node):
-        if N.val > 1 or N.val < -1 or N.der > 1 or N.der < -1:
+        if N.val > 1 or N.val < -1 :
             raise ValueError("{} should have values and derivatives -1 <= x <= 1 for arccos use".format(N))
         val = np.arccos(N.val)
         der = (-1 / np.sqrt(1 - N.val**2)) * N.der
@@ -176,5 +176,34 @@ def logistic(N):
 
 
 
+def logb(b, N):
+    try:
+        float(b)
+        if isinstance(N,Node):
+            new_val = np.log(N.val)/np.log(b)
+            new_der = (1/(np.log(b)*N.val))*N.der
+            return Node(val=new_val,der=new_der)
+        try:
+            float(N)
+            new_val = np.log(N)/np.log(b)
+            return new_val
+        except:
+            raise ValueError("{}should either be a Node instance or a number".format(N))
+    except:
+        raise ValueError("the base of a logb should be an int or a float")
 
+def power(b,N):
+    try:
+        float(b)
+        if isinstance(N,Node):
+            val=b**N.val
+            der=val*log(b)*N.der
+            return Node(val, der)
+        try:
+            float(N)
+            return b**N
+        except:
+            raise ValueError("{}should either be a Node instance or a number".format(N))
+    except:
+        raise ValueError("the base of a power should be an int or a float")
 

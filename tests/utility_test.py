@@ -74,6 +74,9 @@ def test_arcsin():
 
     with pytest.raises(ValueError):
         ad.arcsin("1")
+    x=ad.Node(2, 0.5)
+    with pytest.raises(ValueError):
+        ad.arcsin(x)
 
 
 def test_arccos():
@@ -87,6 +90,9 @@ def test_arccos():
 
     with pytest.raises(ValueError):
         ad.arccos("1")
+    x=ad.Node(2, 0.5)
+    with pytest.raises(ValueError):
+        ad.arccos(x)
 
 
 def test_arctan():
@@ -162,4 +168,29 @@ def test_logistic():
     with pytest.raises(ValueError):
         ad.logistic("1")
 
-
+def test_logb():
+    x = ad.Node(2.0, 2.0)
+    a=ad.logb(np.exp(1),x)
+    b=ad.log(x)
+    assert(np.isclose(a.val,b.val)&np.isclose(a.der,b.der))
+    x = ad.Node(8.0, 2.0)
+    a=ad.logb(2,x)
+    assert(np.isclose(a.val,3))
+    assert(np.isclose(a.der,0.360674))
+    a=ad.logb(3,27)
+    assert(np.isclose(a,3))
+    with pytest.raises(ValueError):
+        ad.logb(x,2)
+    with pytest.raises(ValueError):
+        ad.logb(2,"1")
+def test_power():
+    x = ad.Node(2.0, 2.0)
+    a=ad.power(3,x)
+    assert(np.isclose(a.val,9))
+    assert(np.isclose(a.der,3**2*np.log(3)*x.der))
+    a=ad.power(2,5)
+    assert(np.isclose(a,2**5))
+    with pytest.raises(ValueError):
+        ad.power(x,2)
+    with pytest.raises(ValueError):
+        ad.power(2,"1")
