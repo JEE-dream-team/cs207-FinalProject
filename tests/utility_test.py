@@ -136,7 +136,7 @@ def test_tanh():
     x = ad.Node(2)
     x = ad.tanh(x)
     assert x.val == np.tanh(2)
-    assert x.der == 1 / (np.cosh(2)**2)
+    assert np.isclose(x.der,1 / (np.cosh(2)**2))
 
     x = ad.tanh(2)
     assert x == np.tanh(2)

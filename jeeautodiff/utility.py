@@ -1,5 +1,6 @@
 import numpy as np
 from jeeautodiff.autodiff import Node
+from jeeautodiff.reverse_mode import Node_b
 
 
 def sin(N):
@@ -7,6 +8,11 @@ def sin(N):
         val = np.sin(N.val)
         der = np.cos(N.val) * N.der
         return Node(val, der)
+
+    if isinstance(N, Node_b):
+        z = Node_b(np.sin(N.val))
+        z.parents = [(N, np.cos(N.val))]
+        return z
 
     try:
         float(N)
@@ -21,6 +27,11 @@ def cos(N):
         der = -(np.sin(N.val) * N.der)
         return Node(val, der)
 
+    if isinstance(N, Node_b):
+        z = Node_b(np.cos(N.val))
+        z.parents = [(N, -np.sin(N.val))]
+        return z
+
     try:
         float(N)
         return np.cos(N)
@@ -33,6 +44,10 @@ def tan(N):
         val = np.tan(N.val)
         der = 1 / (np.cos(N.val) ** 2) * N.der
         return Node(val, der)
+    if isinstance(N, Node_b):
+        z = Node_b(np.tan(N.val))
+        z.parents = [(N, 1 / (np.cos(N.val) ** 2))]
+        return z
 
     try:
         float(N)
@@ -46,6 +61,10 @@ def exp(N):
         val = np.exp(N.val)
         der = np.exp(N.val) * N.der
         return Node(val, der)
+    if isinstance(N, Node_b):
+        z = Node_b(np.exp(N.val))
+        z.parents = [(N, np.exp(N.val))]
+        return z
 
     try:
         float(N)
@@ -59,6 +78,11 @@ def log(N):
         val = np.log(N.val)
         der = 1 / N.val * N.der
         return Node(val, der)
+
+    if isinstance(N, Node_b):
+        z = Node_b(np.log(N.val))
+        z.parents = [(N,1 / N.val)]
+        return z
 
     try:
         float(N)
@@ -74,6 +98,12 @@ def arcsin(N):
         val = np.arcsin(N.val)
         der = (1 / np.sqrt(1 - N.val**2)) * N.der
         return Node(val, der)
+    if isinstance(N, Node_b):
+        if N.val > 1 or N.val < -1:
+            raise ValueError("{} should have values and derivatives -1 <= x <= 1 for arcsin use".format(N))
+        z = Node_b(np.arcsin(N.val))
+        z.parents = [(N, (1 / np.sqrt(1 - N.val**2)))]
+        return z
 
     try:
         float(N)
@@ -90,6 +120,13 @@ def arccos(N):
         der = (-1 / np.sqrt(1 - N.val**2)) * N.der
         return Node(val, der)
 
+    if isinstance(N, Node_b):
+        if N.val > 1 or N.val < -1:
+            raise ValueError("{} should have values and derivatives -1 <= x <= 1 for arcsin use".format(N))
+        z = Node_b(np.arccos(N.val))
+        z.parents = [(N, (-1 / np.sqrt(1 - N.val ** 2)))]
+        return z
+
     try:
         float(N)
         return np.arccos(N)
@@ -103,6 +140,10 @@ def arctan(N):
         der = 1 / (N.val**2 + 1) * N.der
         return Node(val, der)
 
+    if isinstance(N, Node_b):
+        z = Node_b(np.arctan(N.val))
+        z.parents = [ (N,1 / (N.val**2 + 1)) ]
+        return z
     try:
         float(N)
         return np.arctan(N)
@@ -116,6 +157,10 @@ def sinh(N):
         der = np.cosh(N.val) * N.der
         return Node(val, der)
 
+    if isinstance(N, Node_b):
+        z = Node_b(np.sinh(N.val))
+        z.parents = [(N, np.cosh(N.val))]
+        return z
     try:
         float(N)
         return np.sinh(N)
@@ -129,6 +174,10 @@ def cosh(N):
         der = np.sinh(N.val) * N.der
         return Node(val, der)
 
+    if isinstance(N, Node_b):
+        z = Node_b(np.cosh(N.val))
+        z.parents = [(N, np.sinh(N.val))]
+        return z
     try:
         float(N)
         return np.cosh(N)
@@ -139,8 +188,13 @@ def cosh(N):
 def tanh(N):
     if isinstance(N, Node):
         val = np.tanh(N.val)
-        der = (1 / np.cosh(N.val) ** 2) * N.der
+        der = (1-np.tanh(N.val)**2) * N.der
         return Node(val, der)
+
+    if isinstance(N, Node_b):
+        z = Node_b(np.tanh(N.val))
+        z.parents = [(N, (1-np.tanh(N.val)**2))]
+        return z
 
     try:
         float(N)
@@ -155,6 +209,11 @@ def sqrt(N):
         der = 0.5 * (N.val ** -0.5) * N.der
         return Node(val, der)
 
+    if isinstance(N, Node_b):
+        z = Node_b(np.sqrt(N.val))
+        z.parents = [(N, 0.5 * (N.val ** -0.5))]
+        return z
+
     try:
         float(N)
         return np.sqrt(N)
@@ -167,6 +226,11 @@ def logistic(N):
         val = np.exp(N.val) / (np.exp(N.val) + 1)
         der = ( np.exp(-N.val) / (1+np.exp(-N.val))**2 ) * N.der
         return Node(val, der)
+
+    if isinstance(N, Node_b):
+        z = Node_b( np.exp(N.val) / (np.exp(N.val) + 1))
+        z.parents = [(N, ( np.exp(-N.val) / (1+np.exp(-N.val))**2 ))]
+        return z
 
     try:
         float(N)
@@ -183,6 +247,11 @@ def logb(b, N):
             new_val = np.log(N.val)/np.log(b)
             new_der = (1/(np.log(b)*N.val))*N.der
             return Node(val=new_val,der=new_der)
+
+        if isinstance(N, Node_b):
+            z = Node_b(np.log(N.val)/np.log(b))
+            z.parents = [(N, (1/(np.log(b)*N.val)))]
+            return z
         try:
             float(N)
             new_val = np.log(N)/np.log(b)
@@ -199,6 +268,12 @@ def power(b,N):
             val=b**N.val
             der=val*log(b)*N.der
             return Node(val, der)
+
+        if isinstance(N, Node_b):
+            val = b ** N.val
+            z = Node_b(val)
+            z.parents = [(N, val*log(b))]
+            return z
         try:
             float(N)
             return b**N
