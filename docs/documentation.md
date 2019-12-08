@@ -26,7 +26,7 @@ Automatic differentiation offers several concrete benefits over alternative mean
 
 # Background
 Chain rule:
-![Chain Rule](/images/ChainRule.png)
+![Chain Rule](https://github.com/JEE-dream-team/cs207-FinalProject/blob/final/docs/images/ChainRule.png)
 
 # Usage
 ## Installation
