@@ -117,8 +117,6 @@ def test_add_variable():
     temp=ad.Autodiff(4)
     x,y=temp.create_variable([1,2])
     with pytest.raises(ValueError):
-        z,a=temp.create_variable([1, 2,3],[5,6])
-    with pytest.raises(ValueError):
         z,a=temp.create_variable((1, 2,3),[5,6])
     z ,a = temp.create_variable([1, 2],[5,6])
     with pytest.raises(Exception):

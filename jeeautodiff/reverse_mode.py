@@ -9,6 +9,7 @@ class Reverse_mode:
             raise Exception("Can not create more variable than pre-specified value")
         try:
             float(val)
+            self.count+=1
             #position of the seed
             return Node_b(val)
         except:
@@ -18,6 +19,7 @@ class Reverse_mode:
                 #record return list of Node
                 node_ls=[]
                 for i in range(0,len(val)):
+                    self.count+=1
                     node_ls.append(Node_b(val[i]))
                 return tuple(node_ls)
 
