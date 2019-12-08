@@ -27,7 +27,7 @@ Automatic differentiation offers several concrete benefits over alternative mean
 # Background
 Chain rule:
 
-<img src="https://github.com/JEE-dream-team/cs207-FinalProject/blob/final/docs/images/ChainRule.png" width="200">
+<img src="https://github.com/JEE-dream-team/cs207-FinalProject/blob/final/docs/images/ChainRule.png" width="300">
 
 # Usage
 ## Installation
@@ -167,5 +167,12 @@ We redefined all of the elementary functions in our package. They take our Node 
 
 
 
-# Future improvements
-The user experience of the `jeeautodiff` library could be improved in several ways. For one, we could intelligently select reverse-mode or forward-mode automatic differentiation by the input the user has supplied, rather than requiring them to select one mode in advance.
+# Future improvements and possible extensions
+The `jeeautodiff` library could be extended to become a more powerful tool. 
+
+It may be useful to intelligently select reverse-mode or forward-mode automatic differentiation based on the input the user has supplied, rather than requiring them to explicitly select one mode in advance. Alternately, we could run both modes for a given input and could report on the speed and memory performance of each approach. This may be helpful for developers deciding which mode to implement for a given use case.
+
+Separately, we could build a friendlier interface for accessing the `jeeautodiff` functionality. For example, we could parse strings via the command line, and prompt users to input their functions there, rather than having them call on the library directly. We could take this one step further and build a GUI for users to execute automatic differentation. If graphical interfaces prove helpful to our userbase, we may consider graphically representing the evaluation output to elucidate the steps of the automatic differentation calculations.
+
+We may also consider extending `jeeautodiff` for particular use cases or applications. And finally, we may consider extending the package to include other modes of differentation for educational purposes; for example, we could support numeric differentation. This may more directly illustrate the benefits and limitations of automatic differenation as compared to other approaches.
+
