@@ -25,17 +25,25 @@ Automatic differentiation offers several concrete benefits over alternative mean
 `jeeautodiff` is a python package for automatically differentiating a function input to the program. The package supports both forward-mode differentiation and reverse-mode differentiation; descriptions and advantages of each are discussed in the [Background](#Background) section below.
 
 # Background
-PLACEHOLDER
+Chain rule:
+![Chain Rule](/images/ChainRule.png)
 
 # Usage
 ## Installation
-The package is available on `PyPI`
+The package is available on `PyPI`:
 
 ```pip install jeeautodiff```
 
 From there, users can import the library as usual:
 
 ```pip install jeeautodiff as ad```
+
+Alternatively, users can download and run the package using the source files on GitHub, by executing:
+```
+git clone https://github.com/JEE-dream-team/cs207-FinalProject.git
+cd cs207-FinalProject
+python setup.py
+```
 
 ## How to use jeeautodiff
 PLACEHOLDER
@@ -126,7 +134,7 @@ The software is packaged with Python Eggs, which allows users to easily install,
 
 # Implementation details
 ## Core Data Structures
-We use **numpy.ndarray** as our core data structure in our **Node** and **Node_b** classes to store the gradient values. The primary reason is that it is easy to pre-define the dimension of the gradient after the user specifies how many variables they will have in the function. In addition, **numpy.ndarrays** are more computationally efficient than some other data structures like python lists, and they operate smoothly with all **numpy** operations.
+We use  `numpy.ndarray` as our core data structure in our **Node** and **Node_b** classes to store the gradient values. The primary reason is that it is easy to pre-define the dimension of the gradient after the user specifies how many variables they will have in the function. In addition,  `numpy.ndarrays` are more computationally efficient than other data structures such as python lists, and they operate smoothly with all  `numpy` operations.
 
 ## Class Implementation
 We implemented dunder methods in a **Node** class to represent the node in forward mode, and in a **Node_b** class to represent the node in reverse mode. These main classes are initiated with two attributes: val (for value) and der (for derivative), where val is required but der is optional. Standard dunder methods are re-written within the classes:
@@ -148,13 +156,13 @@ We implemented dunder methods in a **Node** class to represent the node in forwa
 The utility file contains all other elementary functions, as discussed [above](#Modules-and-functionality).
 
 ### Class Method and Name Attributes
-Our **Node** and **Node_b** classes have two class attributes: function value as “val” and derivative as “der”. All dunder methods and their reverse equiavalents (e.g. __add__ and __radd__) are overwritten to support operations on the node's value and derivative.
+Our **Node** and **Node_b** classes have two class attributes: function value as “val” and derivative as “der.” All dunder methods and their reverse equiavalents (e.g. __add__ and __radd__) are overwritten to support operations on the node's value and derivative.
 
 ## External Dependencies 
-We are relying on **numpy** to define some of our own elementary functions. 
+We are relying on `numpy` to define some of our own elementary functions. 
 
 ## Elementary Functions
-We redefined all of the elementary functions in our package. They take our Node instance as an input and return a Node instance with the updated value and gradient. We rely on **numpy** to get the true value of these operations, but we also manually calculate their derivatives and update the gradient values. The elementary arithmetic operations are redfined in the **Node** class for forward-mode AD and in the **Node_b** class for reverse-mode AD. Elementary functions are redefined in the `utility.py` file, as described [above](#Modules-and-functionality).
+We redefined all of the elementary functions in our package. They take our Node instance as an input and return a Node instance with the updated value and gradient. We rely on `numpy` to get the true value of these operations, but we also manually calculate their derivatives and update the gradient values. The elementary arithmetic operations are redfined in the **Node** class for forward-mode AD and in the **Node_b** class for reverse-mode AD. Elementary functions are redefined in the `utility.py` file, as described [above](#Modules-and-functionality).
 
 
 
