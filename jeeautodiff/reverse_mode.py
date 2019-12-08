@@ -37,14 +37,16 @@ class Reverse_mode:
                 ls = []
                 for i in Node_ls:
                     ls.append(i.grad)
+                ### resetting the gradient of root node so that they can be use again
                 for k in root_node:
                     k.reset()
-                return [f.val,np.array(ls)]
+                return (f.val,np.array(ls))
             else:
                 grad=Node_ls.grad
+                ### resetting the gradient of root node so that they can be use again
                 for k in root_node:
                     k.reset()
-                return [f.val,np.array([grad])]
+                return (f.val,np.array([grad]))
         else:
             raise ValueError("f should be a function in back_eval")
 
