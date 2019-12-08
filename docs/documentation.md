@@ -22,14 +22,12 @@ Automatic differentiation (AD) is a powerful programmatic approach to finding th
 
 Automatic differentiation offers several concrete benefits over alternative means of differentiation. Manual differentiation is prone to mathematical errors; symbolic differentiation produces expression-swelling that is costly in memory; numerical differentiation is subject to rounding errors and inefficient scaling. For its superiority along these dimensions, automatic differentiation has become core to machine learning applications, in applications like neural networks and in tools like TensorFlow and PyTorch.
 
-`jeeautodiff` is a python package for automatically differentiating a function input to the program. The package supports forward-mode differentiation, which means the chain rule is traversed from the innermost elementary function outward, and reverse-mode differentation, which means the chain rule is ???
+`jeeautodiff` is a python package for automatically differentiating a function input to the program. The package supports both forward-mode differentiation and reverse-mode differentiation; descriptions and advantages of each are discussed in the [Background](#Background) section below.
 
 # Background
 PLACEHOLDER
 
 # Usage
-PLACEHOLDER
-
 ## Installation
 The package is available on `PyPI`
 
@@ -40,7 +38,7 @@ From there, users can import the library as usual:
 ```pip install jeeautodiff as ad```
 
 ## How to use jeeautodiff
-XYZ
+PLACEHOLDER
 
 # Software organization
 ### Directory Structure
@@ -132,20 +130,20 @@ We use **numpy.ndarray** as our core data structure in our **Node** and **Node_b
 
 ## Class Implementation
 We implemented dunder methods in a **Node** class to represent the node in forward mode, and in a **Node_b** class to represent the node in reverse mode. These main classes are initiated with two attributes: val (for value) and der (for derivative), where val is required but der is optional. Standard dunder methods are re-written within the classes:
-    - \_\_add__ 
-    - \_\_radd__
-    - \_\_mul__
-    - \_\_rmul__
-    - \_\_sub__
-    - \_\_rsub__
-    - \_\_truediv__
-    - \_\_rtruediv__
-    - \_\_abs__
-    - \_\_neg__ (negation)
-    - \_\_eq__ (comparator: equal to)
-    - \_\_ne__ (comparator: not equal to)
-    - \_\_pow__
-    - \_\_repr__
+  - \_\_add__ 
+  - \_\_radd__
+  - \_\_mul__
+  - \_\_rmul__
+  - \_\_sub__
+  - \_\_rsub__
+  - \_\_truediv__
+  - \_\_rtruediv__
+  - \_\_abs__
+  - \_\_neg__ (negation)
+  - \_\_eq__ (comparator: equal to)
+  - \_\_ne__ (comparator: not equal to)
+  - \_\_pow__
+   - \_\_repr__
 
 The utility file contains all other elementary functions, as discussed [above](#Modules-and-functionality).
 
