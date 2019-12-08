@@ -15,7 +15,7 @@
     - [Class implementation](#Class-Implementation)
     - [External dependencies](#External-Dependencies)
     - [Elementary functions](#Elementary-Functions)
-- [Future Implementations](#Future-Implementations)
+- [Future Improvements](#Future-improvements-and-possible-extensions)
 
 # Introduction
 Automatic differentiation (AD) is a powerful programmatic approach to finding the derivative of a given function. Automatic differentiation solves for the derivative by breaking down the function into a series of elementary arithmetic operations and functions (addition, subtraction, multiplication, division, exponentiation, log10, log2, loge, sin, cos, etc.) and applying the chain rule repeatedly. In this way, complicated derivatives can be calculated quickly and with machine precision.
