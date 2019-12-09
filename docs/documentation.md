@@ -213,11 +213,15 @@ We implemented dunder methods in a **Node** class to represent the node in forwa
   - \_\_ne__ (comparator: not equal to)
   - \_\_pow__
    - \_\_repr__
+  
+The **Autodiff** class is the main class user will interact in forward mode. the dimension attribute of the **Autodiff** class will control the shape of gradient of the user created variable in the class. Based on the dimension, **Autodiff** class will also limit the number of variable that a user can create. The user will create their forward mode variables(**Node** instances) through the **Autodiff** class and they will also use **eval** method of the **Autodiff** class to get the function value and Jacobian
+
+The **Reverse_mode** the main class user will interact in reverse mode. Similar as the **Autodiff** class, user will create their reverse mode variables(**Node** instances) through the **Autodiff** class and they will use **calculate_gradient** function to get the funtion value and its gradient(as currently reverse mode do not support vector functions)
 
 The utility file contains all other elementary functions, as discussed [above](#Modules-and-functionality).
 
 ### Class Method and Name Attributes
-Our **Node** and **Node_b** classes have two class attributes: function value as “val” and derivative as “der.” All dunder methods and their reverse equiavalents (e.g. \_\_add__ and \_\_radd__ ) are overwritten to support operations on the node's value and derivative.
+Our **Node** and **Node_b** classes have two common class attributes: function value as “val” and derivative as “der”. **Node_b** has an extra class attributes **parents** which will be use to track its parents node and the corresponding gradient with repsect to that parent node. All dunder methods and their reverse equiavalents (e.g. \_\_add__ and \_\_radd__ ) are overwritten to support operations on the node's value and derivative.**Node_b** class also has a class method backward(), when backward() is called the node will perform backward propagation to its parent nodes.
 
 ## External Dependencies 
 We leverage `numpy` to define some of our own elementary functions. 
