@@ -48,7 +48,11 @@ Mathematically, the forward mode is equivalent to conducting a set of operations
 Images go here.
 
 ## Reverse mode
-When the network becomes very big, forward mode AD can be computationally expensive. Reverse-mode AD, also known as back-propagation, is a specific implementation of automatic differentiation in which the computational graph is traversed in reverse. This implementation is a mainstay of machine learning as it is commonly used to train neural networks. Mechanically, reverse mode calculates derivatives as the second step of a two-part process. First, the original function code is evaluated forward, populating intermediate variables and recording the dependencies in the computational graph. Next, derivatives are calculated by propagating adjoint derivatives reverse, from the outputs to the inputs. Here, we can no longer interleave the calculation of the derivates with the evaluation of the original expression; the dual number mental model does not apply. Let’s consider the example reviewed above.
+When the network becomes very big, forward mode AD can be computationally expensive. Reverse-mode AD is a specific implementation of automatic differentiation in which the computational graph is traversed in reverse. Mechanically, reverse mode calculates derivatives as the second step of a two-part process. First, the original function code is evaluated forward, populating intermediate variables and recording the dependencies in the computational graph. Next, derivatives are calculated by propagating adjoint derivatives ibn reverse, from the outputs to the inputs. Here, we can no longer interleave the calculation of the derivates with the evaluation of the original expression; the dual number mental model does not apply. 
+
+Back propagation is a special case of reverse mode AD, in which the objective function is a scalar function which represents an error between the output and a true value. Back propagation is a mainstay of machine learning, as it is a common tool for training neural networks.
+
+Let’s consider the example reviewed above.
 
 ### Example:
 Images go here.
