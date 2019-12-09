@@ -23,15 +23,15 @@
 # Introduction
 Automatic differentiation (AD) is a powerful programmatic approach to finding the derivative of a given function. Automatic differentiation solves for the derivative by breaking down the function into a series of elementary arithmetic operations and functions (addition, subtraction, multiplication, division, exponentiation, log10, log2, loge, sin, cos, etc.) and applying the chain rule repeatedly. In this way, complicated derivatives can be calculated quickly and with machine precision.
 
-Automatic differentiation offers several concrete benefits over alternative means of differentiation. Manual differentiation is prone to mathematical errors; symbolic differentiation produces expression-swelling that is costly in memory; numerical differentiation is subject to rounding errors and inefficient scaling. For its superiority along these dimensions, automatic differentiation has become core to machine learning applications, in applications like neural networks and in tools like TensorFlow and PyTorch.
-
 `jeeautodiff` is a python package for automatically differentiating a function input to the program. The package supports both forward-mode differentiation and reverse-mode differentiation; descriptions and advantages of each are discussed in the [Background](#Background) section below.
 
 # Background
 ## Overview
-Chain rule:
+Automatic differentiation breaks down arbitrarily complicated differentiation problems into a combination of elementary arithmetic operations and elementary functions, and then applies the chain rule repeatedly to find the derivative:
 
-<img src="https://github.com/JEE-dream-team/cs207-FinalProject/blob/final/docs/images/ChainRule.png" width="300">
+<img src="https://github.com/JEE-dream-team/cs207-FinalProject/blob/final/docs/images/ChainRule.png" width="200">
+
+Automatic differentiation offers several concrete benefits over alternative means of differentiation. Manual differentiation is prone to mathematical errors; symbolic differentiation produces expression-swelling that is costly in memory; numerical differentiation is subject to rounding errors and inefficient scaling. For its superiority along these dimensions, automatic differentiation has become core to machine learning applications, in applications like neural networks and in tools like TensorFlow and PyTorch. There are two modes of automatic differentation: forward and reverse.
 
 ## Forward mode
 Forward-mode automatic differentiation solves for the derivative of a given function by decomposing the function into elementary arithmetic operations and elementary functions and applying the chain rule repeatedly, traversing the chain rule from inside to outside. By combining the use of the chain rule with the decomposition into to elementary functions and operations, automatic differentiation can achieve results with machine precision.
@@ -45,17 +45,49 @@ Mechanically, the expression is first broken down into an “evaluation trace,�
 Mathematically, the forward mode is equivalent to conducting a set of operations on dual numbers, which are each expressed in a real component plus an additional dual component, ɛ. By substituting (x + ɛ x') for x in f(x) where f is any one operation, we see that operating on x returns the value of the expression as the real component and the derivative as the dual component. As functions become nested, the chain rule is applied, which requires both the value of the function and its derivative to evaluate; that the dual numbers store both simultaneously makes this calculation more efficient.
 
 ### Example
-Images go here.
+Consider an example function:
+
+<img src="https://github.com/JEE-dream-team/cs207-FinalProject/blob/final/docs/images/ExampleFunction.png" width="200">
+
+Considering this complicated function becomes even more unwieldy if we were to ask how it changes with respect to x<sub>2</sub>. Expressed as a partial derivative, that becomes:
+
+<img src="https://github.com/JEE-dream-team/cs207-FinalProject/blob/final/docs/images/ExamplePartial.png" width="200">
+
+Forward-mode AD, however, breaks the function down into the combination of basic arithmetic functions and operations. The connection between these foundational blocks is visualized in the computational graph below:
+
+<img src="https://github.com/JEE-dream-team/cs207-FinalProject/blob/final/docs/images/ForwardGraph.png" width="400">
+
+To find the partial derivative with respect to x<sub>2</sub>, we find the value of the expression at each node, and also the value of the derivative of each node. In forward-mode, each term is calculated from operands that have already been evaluated in a preceding term. The left column is the **evaluation trace** and the right column is the **derivative trace**:
+
+<img src="https://github.com/JEE-dream-team/cs207-FinalProject/blob/final/docs/images/ForwardTrace.png" width="300">
+
+As you can see, we arrive at a single expression for the partial derivative in question. Extrapolating this approach, you can see that to calculate the gradient with respect to a total of N parameters, one would need N forward mode differentiations; this, Jacobians are used for multivariable evaluations.
 
 ## Reverse mode
-When the network becomes very big, forward mode AD can be computationally expensive. Reverse-mode AD is a specific implementation of automatic differentiation in which the computational graph is traversed in reverse. Mechanically, reverse mode calculates derivatives as the second step of a two-part process. First, the original function code is evaluated forward, populating intermediate variables and recording the dependencies in the computational graph. Next, derivatives are calculated by propagating adjoint derivatives ibn reverse, from the outputs to the inputs. Here, we can no longer interleave the calculation of the derivates with the evaluation of the original expression; the dual number mental model does not apply. 
+When the network becomes very big, forward mode AD can be computationally expensive. Reverse-mode AD is a specific implementation of automatic differentiation in which the computational graph is traversed in reverse. Mechanically, reverse mode calculates derivatives as the second step of a two-part process. First, the original function code is evaluated forward, populating intermediate variables and recording the dependencies in the computational graph. Next, derivatives are calculated by propagating adjoint derivatives in reverse, from the outputs to the inputs. Here, we can no longer interleave the calculation of the derivates with the evaluation of the original expression; the dual number mental model does not apply. 
 
 Back propagation is a special case of reverse mode AD, in which the objective function is a scalar function which represents an error between the output and a true value. Back propagation is a mainstay of machine learning, as it is a common tool for training neural networks.
 
 Let’s consider the example reviewed above.
 
 ### Example:
-Images go here.
+
+<img src="https://github.com/JEE-dream-team/cs207-FinalProject/blob/final/docs/images/ExampleFunction.png" width="200">
+
+Reverse-mode, as described above, first enumerates the evaluation trace in the forward direction; you can see the evaluation trace in the left column is the same the evaluation trace of the forward-mode approach. The derivative trace, however, is evaluated from bottom-to-top. Each lower term is calcuated before the higher term. 
+
+<img src="https://github.com/JEE-dream-team/cs207-FinalProject/blob/final/docs/images/ReverseTrace.png" width="300">
+
+Like forward-mode, the chain rule stipulates that we again only care about the local derivative at each node. However, since the derivative trace is calculated in reverse, we cannot calcuate the node's value and derivative simultaneously.
+
+As a result, forward-mode is advantageous when the number of functions greatly exceeds the number of inputs evaluated and reverse-mode is superior when the number of inputs is much greater than the number of functions.
+
+### Citations
+The above illustrative graphics can be attributed to:
+
+* CS207 Course Website, David Sondak and team: https://harvard-iacs.github.io/2019-CS207/
+* __The Magic of Automatic Differentiation__, Sanyam Kapoor: https://www.sanyamkapoor.com/machine-learning/autograd-magic/
+
 
 # Usage
 ## Installation
