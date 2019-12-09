@@ -1,6 +1,9 @@
 # Content
 - [Introduction](#Introduction)
 - [Background](#Background)
+    - [Overview](#Overview)
+    - [Forward-mode](#Forward-mode)
+    - [Reverse-mode](#Reverse-mode)
 - [Usage](#Usage)
     - [Installation](#Installation)
     - [How to use](#How-to-use-jeeautodiff)
@@ -25,9 +28,30 @@ Automatic differentiation offers several concrete benefits over alternative mean
 `jeeautodiff` is a python package for automatically differentiating a function input to the program. The package supports both forward-mode differentiation and reverse-mode differentiation; descriptions and advantages of each are discussed in the [Background](#Background) section below.
 
 # Background
+## Overview
 Chain rule:
 
 <img src="https://github.com/JEE-dream-team/cs207-FinalProject/blob/final/docs/images/ChainRule.png" width="300">
+
+## Forward mode
+Forward-mode automatic differentiation solves for the derivative of a given function by decomposing the function into elementary arithmetic operations and elementary functions and applying the chain rule repeatedly, traversing the chain rule from inside to outside. By combining the use of the chain rule with the decomposition into to elementary functions and operations, automatic differentiation can achieve results with machine precision.
+
+### Graph structure
+This is represented visually via a directed graph of nodes and edges, where the nodes represent some operation done on an elementary function from the decomposition. The value at the derivative of each node are found simultaneously, and each subsequent node along the directed graph can be expressed as operands that have already been calculated in some previous node. As such, the full symbolic expression of the derivative is never found; the expressions are local to each node and simplified at each step of the way.
+
+Mechanically, the expression is first broken down into an “evaluation trace,” containing a set of xi traces or intermediary computed variables. Next, the calculation is visualized via steps in an “evaluation graph,” which reflects the computation elements with edges and nodes.
+
+### Dual numbers
+Mathematically, the forward mode is equivalent to conducting a set of operations on dual numbers, which are each expressed in a real component plus an additional dual component, ɛ. By substituting (x + ɛ x') for x in f(x) where f is any one operation, we see that operating on x returns the value of the expression as the real component and the derivative as the dual component. As functions become nested, the chain rule is applied, which requires both the value of the function and its derivative to evaluate; that the dual numbers store both simultaneously makes this calculation more efficient.
+
+### Example
+Images go here.
+
+## Reverse mode
+When the network becomes very big, forward mode AD can be computationally expensive. Reverse-mode AD, also known as back-propagation, is a specific implementation of automatic differentiation in which the computational graph is traversed in reverse. This implementation is a mainstay of machine learning as it is commonly used to train neural networks. Mechanically, reverse mode calculates derivatives as the second step of a two-part process. First, the original function code is evaluated forward, populating intermediate variables and recording the dependencies in the computational graph. Next, derivatives are calculated by propagating adjoint derivatives reverse, from the outputs to the inputs. Here, we can no longer interleave the calculation of the derivates with the evaluation of the original expression; the dual number mental model does not apply. Let’s consider the example reviewed above.
+
+### Example:
+Images go here.
 
 # Usage
 ## Installation
@@ -157,22 +181,25 @@ We implemented dunder methods in a **Node** class to represent the node in forwa
 The utility file contains all other elementary functions, as discussed [above](#Modules-and-functionality).
 
 ### Class Method and Name Attributes
-Our **Node** and **Node_b** classes have two class attributes: function value as “val” and derivative as “der.” All dunder methods and their reverse equiavalents (e.g. __add__ and __radd__) are overwritten to support operations on the node's value and derivative.
+Our **Node** and **Node_b** classes have two class attributes: function value as “val” and derivative as “der.” All dunder methods and their reverse equiavalents (e.g. \_\_add__ and \_\_radd__ ) are overwritten to support operations on the node's value and derivative.
 
 ## External Dependencies 
-We are relying on `numpy` to define some of our own elementary functions. 
+We leverage `numpy` to define some of our own elementary functions. 
 
 ## Elementary Functions
-We redefined all of the elementary functions in our package. They take our Node instance as an input and return a Node instance with the updated value and gradient. We rely on `numpy` to get the true value of these operations, but we also manually calculate their derivatives and update the gradient values. The elementary arithmetic operations are redfined in the **Node** class for forward-mode AD and in the **Node_b** class for reverse-mode AD. Elementary functions are redefined in the `utility.py` file, as described [above](#Modules-and-functionality).
+We redefined all of the elementary functions in our package. They take our **Node** instance as an input and return a **Node** instance with the updated value and gradient. We leverage `numpy` to get the true value of these operations, but we also manually calculate their derivatives and update the gradient values. The elementary arithmetic operations are redfined in the **Node** class for forward-mode AD and in the **Node_b** class for reverse-mode AD. Elementary functions are redefined in the `utility.py` file, as described [above](#Modules-and-functionality).
 
+# Extension
+The `jeeautodiff` library was extended beyond forward-mode automatic differentation to include reverse-mode automatic differentation, which was introduced in the [Background](#Background) section. 
 
+Reverse-mode implementation details go here.
 
 # Future improvements and possible extensions
 The `jeeautodiff` library could be extended to become a more powerful tool. 
 
-It may be useful to intelligently select reverse-mode or forward-mode automatic differentiation based on the input the user has supplied, rather than requiring them to explicitly select one mode in advance. Alternately, we could run both modes for a given input and could report on the speed and memory performance of each approach. This may be helpful for developers deciding which mode to implement for a given use case.
+It may be useful to intelligently select reverse-mode or forward-mode automatic differentiation based on the input the user has supplied, rather than requiring them to explicitly select one mode in advance. Alternately, we could run both modes for a given input and report on the speed and memory performance of each approach. This may be helpful for developers deciding which mode to implement for a given use case.
 
-Separately, we could build a friendlier interface for accessing the `jeeautodiff` functionality. For example, we could parse strings via the command line, and prompt users to input their functions there, rather than having them call on the library directly. We could take this one step further and build a GUI for users to execute automatic differentation. If graphical interfaces prove helpful to our userbase, we may consider graphically representing the evaluation output to elucidate the steps of the automatic differentation calculations.
+Separately, we could build a friendlier interface for accessing the `jeeautodiff` functionality. For example, we could parse strings via the command line, and prompt users to input their functions there, rather than having them call on the library directly. We could take this one step further and build a GUI for users to execute automatic differentation. If graphical interfaces prove helpful to our userbase, we may consider graphically representing the evaluation output to elucidate the steps along the computation graph used in the automatic differentation calculations.
 
-We may also consider extending `jeeautodiff` for particular use cases or applications. And finally, we may consider extending the package to include other modes of differentation for educational purposes; for example, we could support numeric differentation. This may more directly illustrate the benefits and limitations of automatic differenation as compared to other approaches.
+We may also consider extending `jeeautodiff` for particular use cases or applications; AD has previously proved useful in applications as diverse as fluid dynamics, engineering design optimization, and computational finance. And finally, we may consider extending the package to include other modes of differentation for educational purposes; for example, we could support numeric differentation. This may more directly illustrate the benefits and limitations of automatic differenation as compared to other approaches.
 
