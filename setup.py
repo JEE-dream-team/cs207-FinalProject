@@ -12,5 +12,9 @@ setup(
     version="0.1",
     license="MIT",
     description="Automatic differentiation package",
-    long_descrption=open("README.md").read(),
+    long_description=open("README.md").read(),
+    classifiers=[
+        "Programming Language :: Python :: 3",
+    ],    
+    python_requires='>=3.6'
 )
