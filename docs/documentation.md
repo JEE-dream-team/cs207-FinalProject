@@ -100,7 +100,7 @@ Alternatively, users can download and run the package using the source files on 
 ```
 git clone https://github.com/JEE-dream-team/cs207-FinalProject.git
 cd cs207-FinalProject
-python setup.py
+sudo python setup.py install
 ```
 
 ## How to use jeeautodiff
