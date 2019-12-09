@@ -51,17 +51,17 @@ Consider an example function:
 
 Considering this complicated function becomes even more unwieldy if we were to ask how it changes with respect to x<sub>2</sub>. Expressed as a partial derivative, that becomes:
 
-<img src="https://github.com/JEE-dream-team/cs207-FinalProject/blob/final/docs/images/ExamplePartial.png" width="200">
+<img src="https://github.com/JEE-dream-team/cs207-FinalProject/blob/final/docs/images/ExamplePartial.png" width="300">
 
 Forward-mode AD, however, breaks the function down into the combination of basic arithmetic functions and operations. The connection between these foundational blocks is visualized in the computational graph below:
 
-<img src="https://github.com/JEE-dream-team/cs207-FinalProject/blob/final/docs/images/ForwardGraph.png" width="400">
+<img src="https://github.com/JEE-dream-team/cs207-FinalProject/blob/final/docs/images/ForwardGraph.png" width="1000">
 
 To find the partial derivative with respect to x<sub>2</sub>, we find the value of the expression at each node, and also the value of the derivative of each node. In forward-mode, each term is calculated from operands that have already been evaluated in a preceding term. The left column is the **evaluation trace** and the right column is the **derivative trace**:
 
-<img src="https://github.com/JEE-dream-team/cs207-FinalProject/blob/final/docs/images/ForwardTrace.png" width="300">
+<img src="https://github.com/JEE-dream-team/cs207-FinalProject/blob/final/docs/images/ForwardTrace.png" width="800">
 
-As you can see, we arrive at a single expression for the partial derivative in question. Extrapolating this approach, you can see that to calculate the gradient with respect to a total of N parameters, one would need N forward mode differentiations; this, Jacobians are used for multivariable evaluations.
+As you can see, we arrive at a single expression for the partial derivative in question. Extrapolating this approach, you can see that to calculate the gradient with respect to a total of N parameters, one would need N forward mode differentiations; thus, Jacobians are used for multivariable evaluations.
 
 ## Reverse mode
 When the network becomes very big, forward mode AD can be computationally expensive. Reverse-mode AD is a specific implementation of automatic differentiation in which the computational graph is traversed in reverse. Mechanically, reverse mode calculates derivatives as the second step of a two-part process. First, the original function code is evaluated forward, populating intermediate variables and recording the dependencies in the computational graph. Next, derivatives are calculated by propagating adjoint derivatives in reverse, from the outputs to the inputs. Here, we can no longer interleave the calculation of the derivates with the evaluation of the original expression; the dual number mental model does not apply. 
@@ -74,9 +74,9 @@ Let’s consider the example reviewed above.
 
 <img src="https://github.com/JEE-dream-team/cs207-FinalProject/blob/final/docs/images/ExampleFunction.png" width="200">
 
-Reverse-mode, as described above, first enumerates the evaluation trace in the forward direction; you can see the evaluation trace in the left column is the same the evaluation trace of the forward-mode approach. The derivative trace, however, is evaluated from bottom-to-top. Each lower term is calcuated before the higher term. 
+Reverse-mode, as described above, first enumerates the **evaluation trace** in the forward direction; you can see the evaluation trace in the left column is the same the evaluation trace of the forward-mode approach. The **derivative trace**, however, is evaluated from bottom-to-top. Each lower term is calcuated before the higher term. 
 
-<img src="https://github.com/JEE-dream-team/cs207-FinalProject/blob/final/docs/images/ReverseTrace.png" width="300">
+<img src="https://github.com/JEE-dream-team/cs207-FinalProject/blob/final/docs/images/ReverseTrace.png" width="800">
 
 Like forward-mode, the chain rule stipulates that we again only care about the local derivative at each node. However, since the derivative trace is calculated in reverse, we cannot calcuate the node's value and derivative simultaneously.
 
@@ -86,7 +86,7 @@ As a result, forward-mode is advantageous when the number of functions greatly e
 The above illustrative graphics can be attributed to:
 
 * CS207 Course Website, David Sondak and team: https://harvard-iacs.github.io/2019-CS207/
-* __The Magic of Automatic Differentiation__, Sanyam Kapoor: https://www.sanyamkapoor.com/machine-learning/autograd-magic/
+* _The Magic of Automatic Differentiation_, Sanyam Kapoor: https://www.sanyamkapoor.com/machine-learning/autograd-magic/
 
 
 # Usage
