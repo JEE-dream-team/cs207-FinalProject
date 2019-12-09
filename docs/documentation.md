@@ -311,7 +311,7 @@ We implemented dunder methods in a **Node** class to represent the node in forwa
   
 The **Autodiff** class is the main class user will interact in forward mode. the dimension attribute of the **Autodiff** class will control the shape of gradient of the user created variable in the class. Based on the dimension, **Autodiff** class will also limit the number of variable that a user can create. The user will create their forward mode variables(**Node** instances) through the **Autodiff** class and they will also use **eval** method of the **Autodiff** class to get the function value and Jacobian
 
-The **Reverse_mode** the main class user will interact in reverse mode. Similar as the **Autodiff** class, user will create their reverse mode variables(**Node** instances) through the **Autodiff** class and they will use **calculate_gradient** function to get the funtion value and its gradient(as currently reverse mode do not support vector functions)
+The **Reverse_mode** the main class user will interact in reverse mode. Similar as the **Autodiff** class, user will create their reverse mode variables(**Node_b** instances) through the **Reverse_mode** class and they will use **calculate_gradient** function to get the funtion value and its gradient(as currently reverse mode do not support vector functions)
 
 The utility file contains all other elementary functions, as discussed [above](#Modules-and-functionality).
 
@@ -327,7 +327,7 @@ We redefined all of the elementary functions in our package. They take our **Nod
 # Extension
 The `jeeautodiff` library was extended beyond forward-mode automatic differentation to include reverse-mode automatic differentation, which was introduced in the [Background](#Background) section. 
 
-Reverse-mode implementation details go here.
+The user can choose either forward-mode or reverse-mode to calculate the gradient of function and they should return the same result. Please see [How to use](#(#How-to-use-jeeautodiff)) section for instruction How to use reverse-mode in our package. For implementation detail, please see [Implementation Details](#Implementation-Details) section.
 
 # Future improvements and possible extensions
 The `jeeautodiff` library could be extended to become a more powerful tool. 
