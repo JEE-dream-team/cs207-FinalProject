@@ -107,7 +107,61 @@ python setup.py
 ```
 
 ## How to use jeeautodiff
-PLACEHOLDER
+
+You can just import them as usual in python:
+
+```import jeeautodiff as ad```
+
+### Instantiating AD(Forward Mode) objects
+Users will instantiate AD objects by creating instances of the relevant class and passing variables into the methods of that instance. They need to specify the number of variables they want to use in the AD object,that will specify the shape of the gradient.The default number is one:
+
+```a=ad.autodiff(3)```
+
+Passing a “3” into the instance allowes the user to initiate at most 3 variables in this autodiff instance.
+
+### Creating variables
+After they create the **Autodiff** instance, they can then create variable by calling the create_variable(val,der) method, the create_variable support both scarlar input or vector input 
+
+For scalar case, both var and der will be scalar and if you do not specify der value,the default value will be one. Create_variable will return a variable you can later use in your function, the variable will be a Node instance and the shape of the gradient will be defined by the dimension attribute of your defined autodiff instance.In our example case, the gradient dimension will be 3. Also the entry of the gradient that will be set to **der** will based on the order you create your variable
+
+For example:
+```x=a.create_variable(3)```
+
+then x will be a Node with val 3 and derivative numpy.array([1,0,0])
+
+For vector case, both var and der will be a list of numbers and if you do not specify der value, the default value will be one for all of them.  Create_variable will return a tuple of Node which has the same length as the length of var. The function will loop through the val and der list and create Node instance sequentially. For example:
+
+```y,z=a.create_variable([2,3],[1,2])```
+
+then y will be a Node with val 2 and derivative numpy.array([0,1,0]) and z will be a Node with val 3 and derivative numpy.array([0,0,2])
+
+**If the user creates more variables than what is specified in this class instance, an error will be raised**
+
+### Evaluating functions
+
+After initiating variables, the user can pass the function they want to evaluate to the “eval” method which returns a tuple of its value and gradient. eval() accept both scalar and vector iniputs. They can use all defined elementary function directly and they are defined in our utility module. See [Software organization](#Software-Organization) for detail. 
+
+Here is an example for scalar input:
+
+Suppose user wants to pass in $exp(x)+(sin(y))^{2}$  they will need to do:
+
+```tuple = a.eval(exp(x)+(sin(y))**2)```
+
+Where “tuple” is the return value, as the tuple (function_value, gradient).
+
+Here is an example for vector input:
+
+Suppose user want to evaluate both $exp(x)+(sin(y))^{2}$ and $tanh(x+y+z)+logistic(y)$, they need to pass in them as a list of functions
+
+```tuple = a.eval([exp(x)+(sin(y))**2,logistic(y)])```
+
+Where “tuple” is the return value, as the tuple (function_value=numpy.array([function_value1,function value2]), jacobian=numpy.array[[gradient1],[gradient2]]). The function_value will always be a numpy 1d array where each item is corresponding to each function value while jacobian will alaways be a numpy 2d array where each row represents the gradient of each function
+
+The user can continue to evaluate different functions using the same instance of an AD object by passing different functions or vector of functions to the “evaluate” method defined above
+
+**If the user passes variables that have not been initialized, the evaluate function will raise an error.**
+
+
 
 # Software organization
 ### Directory Structure
