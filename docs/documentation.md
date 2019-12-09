@@ -55,11 +55,11 @@ Considering this complicated function becomes even more unwieldy if we were to a
 
 Forward-mode AD, however, breaks the function down into the combination of basic arithmetic functions and operations. The connection between these foundational blocks is visualized in the computational graph below:
 
-<img src="https://github.com/JEE-dream-team/cs207-FinalProject/blob/final/docs/images/ForwardGraph.png" width="1000">
+<img src="https://github.com/JEE-dream-team/cs207-FinalProject/blob/final/docs/images/ForwardGraph.png" width="850">
 
 To find the partial derivative with respect to x<sub>2</sub>, we find the value of the expression at each node, and also the value of the derivative of each node. In forward-mode, each term is calculated from operands that have already been evaluated in a preceding term. The left column is the **evaluation trace** and the right column is the **derivative trace**:
 
-<img src="https://github.com/JEE-dream-team/cs207-FinalProject/blob/final/docs/images/ForwardTrace.png" width="800">
+<img src="https://github.com/JEE-dream-team/cs207-FinalProject/blob/final/docs/images/ForwardTrace.png" width="650">
 
 As you can see, we arrive at a single expression for the partial derivative in question. Extrapolating this approach, you can see that to calculate the gradient with respect to a total of N parameters, one would need N forward mode differentiations; thus, Jacobians are used for multivariable evaluations.
 
@@ -76,7 +76,7 @@ Let’s consider the example reviewed above.
 
 Reverse-mode, as described above, first enumerates the **evaluation trace** in the forward direction; you can see the evaluation trace in the left column is the same the evaluation trace of the forward-mode approach. The **derivative trace**, however, is evaluated from bottom-to-top. Each lower term is calcuated before the higher term. 
 
-<img src="https://github.com/JEE-dream-team/cs207-FinalProject/blob/final/docs/images/ReverseTrace.png" width="800">
+<img src="https://github.com/JEE-dream-team/cs207-FinalProject/blob/final/docs/images/ReverseTrace.png" width="650">
 
 Like forward-mode, the chain rule stipulates that we again only care about the local derivative at each node. However, since the derivative trace is calculated in reverse, we cannot calcuate the node's value and derivative simultaneously.
 
