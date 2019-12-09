@@ -1,0 +1,15 @@
+README.md
+setup.py
+jeeautodiff/__init__.py
+jeeautodiff/autodiff.py
+jeeautodiff/reverse_mode.py
+jeeautodiff/utility.py
+jeeautodiff.egg-info/PKG-INFO
+jeeautodiff.egg-info/SOURCES.txt
+jeeautodiff.egg-info/dependency_links.txt
+jeeautodiff.egg-info/requires.txt
+jeeautodiff.egg-info/top_level.txt
+tests/__init__.py
+tests/autodiff_test.py
+tests/reverse_mode_test.py
+tests/utility_test.py

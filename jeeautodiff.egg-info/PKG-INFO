@@ -1,0 +1,21 @@
+Metadata-Version: 1.2
+Name: jeeautodiff
+Version: 0.1
+Summary: Automatic differentiation package
+Home-page: https://github.com/JEE-dream-team/cs207-FinalProject.git
+Author: JEE
+License: MIT
+Description: ## cs207-FinalProject
+        ### Group 20
+        Emily Batt,
+        Duo Zhang,
+        Evan Simons.
+        
+        Travis CI
+        [![Build Status](https://travis-ci.com/JEE-dream-team/cs207-FinalProject.svg?branch=master)](https://travis-ci.com/JEE-dream-team/cs207-FinalProject)
+        
+        CodeCov
+        [![codecov](https://codecov.io/gh/JEE-dream-team/cs207-FinalProject/branch/master/graph/badge.svg)](https://codecov.io/gh/JEE-dream-team/cs207-FinalProject)
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Requires-Python: >=3.6
