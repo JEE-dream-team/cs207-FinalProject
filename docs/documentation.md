@@ -95,9 +95,6 @@ The package is available on `PyPI`:
 
 ```pip install jeeautodiff```
 
-From there, users can import the library as usual:
-
-```pip install jeeautodiff as ad```
 
 Alternatively, users can download and run the package using the source files on GitHub, by executing:
 ```
@@ -125,6 +122,7 @@ After they create the **Autodiff** instance, they can then create variable by ca
 For scalar case, both var and der will be scalar and if you do not specify der value,the default value will be one. Create_variable will return a variable you can later use in your function, the variable will be a Node instance and the shape of the gradient will be defined by the dimension attribute of your defined autodiff instance.In our example case, the gradient dimension will be 3. Also the entry of the gradient that will be set to **der** will based on the order you create your variable
 
 For example:
+
 ```x=a.create_variable(3)```
 
 then x will be a Node with val 3 and derivative numpy.array([1,0,0])
@@ -145,7 +143,7 @@ Here is an example for scalar input:
 
 Suppose user wants to pass in $exp(x)+(sin(y))^{2}$  they will need to do:
 
-```tuple = a.eval(exp(x)+(sin(y))**2)```
+```tuple = a.eval(ad.exp(x)+ad.(sin(y))**2)```
 
 Where “tuple” is the return value, as the tuple (function_value, gradient).
 
@@ -153,7 +151,7 @@ Here is an example for vector input:
 
 Suppose user want to evaluate both $exp(x)+(sin(y))^{2}$ and $tanh(x+y+z)+logistic(y)$, they need to pass in them as a list of functions
 
-```tuple = a.eval([exp(x)+(sin(y))**2,logistic(y)])```
+```tuple = a.eval([ad.exp(x)+(ad.sin(y))**2,ad.logistic(y)])```
 
 Where “tuple” is the return value, as the tuple (function_value=numpy.array([function_value1,function value2]), jacobian=numpy.array[[gradient1],[gradient2]]). The function_value will always be a numpy 1d array where each item is corresponding to each function value while jacobian will alaways be a numpy 2d array where each row represents the gradient of each function
 
@@ -161,7 +159,50 @@ The user can continue to evaluate different functions using the same instance of
 
 **If the user passes variables that have not been initialized, the evaluate function will raise an error.**
 
+### Reverse Mode
+To use reverse mode, user will need to create a **Reverse_mode** instance. Similar to forward mode, they need to specify the number of variables they want to use in the **Reverse_mode** object.The default number is one:
 
+```a=ad.Reverse_mode(3)```
+
+
+Passing a “3” into the instance allowes the user to initiate at most 3 variables in this autodiff instance.
+
+### Creating variables in Reverse mode
+
+After they create the **Reverse_mode** instance, they can then create variable by calling the create_variable(val) method, the create_variable support both scarlar input or vector input. Notice that create_variable in reverse mode do not specify the der part
+
+For scalar case, both var will be scalar. Create_variable will return a variable you can later use in your function, the variable will be a Node_b instance .I
+For example:
+
+```x=a.create_variable(3)```
+
+then x will be a Node_b instance with val 3
+
+For vector case, var will be a list of numbers. Create_variable will return a tuple of Node_b instances which has the same length as the length of var. The function will loop through the val ist and create Node_b instance sequentially. For example:
+
+```y,z=a.create_variable([2,3],[1,2])```
+
+then y will be a Node_b with val 2 and z will be a Node_b with val 3 
+
+**If the user creates more variables than what is specified in this class instance, an error will be raised**
+
+### Calculating gradient in Reverse_mode
+
+```calculate_gradient(self,f,Node_ls)```
+
+After initiating variables,the user can pass a function f using variables created and a list of variable Node_b_ls they want to evaluate gradient on to the calculate_gradient() function. They can use all defined elementary function directly and they are defined in our utility module. See [Software organization](#Software-Organization) for detail. Right now f can not be a vector of functions
+
+Here is an example:
+
+Suppose user wants to pass in $exp(x)+(sin(y))^{2}$  they will need to do:
+
+```tuple = a.calculate_gradient(ad.exp(x)+ad.(sin(y))**2,[x,y])```
+
+Where “tuple” is the return value. The first element of the tuple is the function value and the second element is a numpy 1d array that contain the derivative of f respect to each of the variable we pass in. In our demo case, it would be numpy.array([df/dx,df/dy])
+
+The user can continue to evaluate different functions using the same instance of a **Reverse_mode** object by passing different functions to the “calculate_gradient()” method defined above
+
+**If the user passes variables that have not been initialized, the calculate_gradient() function will raise an error.**
 
 # Software organization
 ### Directory Structure
