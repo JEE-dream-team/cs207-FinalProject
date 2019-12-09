@@ -42,7 +42,7 @@ This is represented visually via a directed graph of nodes and edges, where the 
 Mechanically, the expression is first broken down into an “evaluation trace,” containing a set of xi traces or intermediary computed variables. Next, the calculation is visualized via steps in an “evaluation graph,” which reflects the computation elements with edges and nodes.
 
 ### Dual numbers
-Mathematically, the forward mode is equivalent to conducting a set of operations on dual numbers, which are each expressed in a real component plus an additional dual component, ɛ. By substituting (x + ɛ x') for x in f(x) where f is any one operation, we see that operating on x returns the value of the expression as the real component and the derivative as the dual component. As functions become nested, the chain rule is applied, which requires both the value of the function and its derivative to evaluate; that the dual numbers store both simultaneously makes this calculation more efficient.
+Mathematically, the forward-mode is equivalent to conducting a set of operations on dual numbers, which are each expressed in a real component plus an additional dual component, ɛ. By substituting (x + ɛ x') for x in f(x) where f is any one operation, we see that operating on x returns the value of the expression as the real component and the derivative as the dual component. As functions become nested, the chain rule is applied, which requires both the value of the function and its derivative to evaluate; that the dual numbers store both simultaneously makes this calculation more efficient.
 
 ### Example
 Consider an example function:
@@ -61,12 +61,12 @@ To find the partial derivative with respect to x<sub>2</sub>, we find the value 
 
 <img src="https://github.com/JEE-dream-team/cs207-FinalProject/blob/final/docs/images/ForwardTrace.png" width="650" class="center">
 
-As you can see, we arrive at a single expression for the partial derivative in question. Extrapolating this approach, you can see that to calculate the gradient with respect to a total of N parameters, one would need N forward mode differentiations; thus, Jacobians are used for multivariable evaluations.
+As you can see, we arrive at a single expression for the partial derivative in question. Extrapolating this approach, you can see that to calculate the gradient with respect to a total of N parameters, one would need N forward-mode differentiations; thus, Jacobians are used for multivariable evaluations.
 
 ## Reverse mode
-When the network becomes very big, forward mode AD can be computationally expensive. Reverse-mode AD is a specific implementation of automatic differentiation in which the computational graph is traversed in reverse. Mechanically, reverse mode calculates derivatives as the second step of a two-part process. First, the original function code is evaluated forward, populating intermediate variables and recording the dependencies in the computational graph. Next, derivatives are calculated by propagating adjoint derivatives in reverse, from the outputs to the inputs. Here, we can no longer interleave the calculation of the derivates with the evaluation of the original expression; the dual number mental model does not apply. 
+When the network becomes very big, forward-mode AD can be computationally expensive. Reverse-mode AD is a specific implementation of automatic differentiation in which the computational graph is traversed in reverse to find the derivatives. Mechanically, reverse-mode calculates derivatives as the second step of a two-part process. First, the original function code is evaluated forward, populating intermediate variables and recording the dependencies in the computational graph. Next, derivatives are calculated by propagating adjoint derivatives in reverse, from the outputs to the inputs. Here, we can no longer interleave the calculation of the derivates with the evaluation of the original expression; the dual number mental model does not apply. 
 
-Back propagation is a special case of reverse mode AD, in which the objective function is a scalar function which represents an error between the output and a true value. Back propagation is a mainstay of machine learning, as it is a common tool for training neural networks.
+Back propagation is a special case of reverse-mode AD, in which the objective function is a scalar function which represents an error between the output and a true value. Back propagation is a mainstay of machine learning, as it is a common tool for training neural networks.
 
 Let’s consider the example reviewed above.
 
@@ -151,10 +151,10 @@ PLACEHOLDER
 `jeeautodiff.py` is the module in our package that contains both forward-mode and reverse-mode functionality.
 
 ### Forward-mode functionality
-The **Autodiff** class, found in `autodiff.py`, encapsulates the forward-mode automatic differentiation functionality. This file also contains the **Node** class. The user interacts directly with the main **Autodiff** class by supplying variables and expressions to be evalauted. The **Node** class overrides the standard dunder methods to represent the node in forward mode. See [Implementation Details](#Implementation-Details) for more information.
+The **Autodiff** class, found in `autodiff.py`, encapsulates the forward-mode automatic differentiation functionality. This file also contains the **Node** class. The user interacts directly with the main **Autodiff** class by supplying variables and expressions to be evalauted. The **Node** class overrides the standard dunder methods to represent the node in forward-mode. See [Implementation Details](#Implementation-Details) for more information.
 
 ### Reverse-mode functionality
-The **Reverse_mode** class, found in `reverse_mode.py`, encapsulates the reverse-mode automatic differentiation functionality. This file also contains the **Node_b** class. The user interacts directly with the main **Reverse_mode** class by supplying variables and expressions to be evalauted. The **Node_b** class overrides the standard dunder methods to represent the node in reverse mode. See [Implementation Details](#Implementation-Details) for more information.
+The **Reverse_mode** class, found in `reverse_mode.py`, encapsulates the reverse-mode automatic differentiation functionality. This file also contains the **Node_b** class. The user interacts directly with the main **Reverse_mode** class by supplying variables and expressions to be evalauted. The **Node_b** class overrides the standard dunder methods to represent the node in reverse-mode. See [Implementation Details](#Implementation-Details) for more information.
 
 ### Utility file
 `utility.py` handles all elementary functions not addressed in `autodiff.py` or `reverse_mode.py`. The functions are handled differently based on whether reverse-mode or forward-mode automatic differentiation is being used. We implemented the following functions:
@@ -198,7 +198,7 @@ The software is packaged with Python Eggs, which allows users to easily install,
 We use  `numpy.ndarray` as our core data structure in our **Node** and **Node_b** classes to store the gradient values. The primary reason is that it is easy to pre-define the dimension of the gradient after the user specifies how many variables they will have in the function. In addition,  `numpy.ndarrays` are more computationally efficient than other data structures such as python lists, and they operate smoothly with all  `numpy` operations.
 
 ## Class Implementation
-We implemented dunder methods in a **Node** class to represent the node in forward mode, and in a **Node_b** class to represent the node in reverse mode. These main classes are initiated with two attributes: val (for value) and der (for derivative), where val is required but der is optional. Standard dunder methods are re-written within the classes:
+We implemented dunder methods in a **Node** class to represent the node in forward-mode, and in a **Node_b** class to represent the node in reverse-mode. These main classes are initiated with two attributes: val (for value) and der (for derivative), where val is required but der is optional. Standard dunder methods are re-written within the classes:
   - \_\_add__ 
   - \_\_radd__
   - \_\_mul__
