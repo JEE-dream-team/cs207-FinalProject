@@ -18,6 +18,7 @@
     - [Class implementation](#Class-Implementation)
     - [External dependencies](#External-Dependencies)
     - [Elementary functions](#Elementary-Functions)
+- [Extension](#Extension)
 - [Future Improvements](#Future-improvements-and-possible-extensions)
 
 # Introduction
