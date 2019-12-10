@@ -4,6 +4,13 @@ from jeeautodiff.reverse_mode import Node_b
 
 
 def sin(N):
+    """
+    the sin() function
+    If the input is a Node instance return Node
+    if the input is a Node_b instance return  Node_b
+    if a scalar n return sin(n)
+    else raise an error
+    """
     if isinstance(N, Node):
         val = np.sin(N.val)
         der = np.cos(N.val) * N.der
@@ -22,6 +29,13 @@ def sin(N):
 
 
 def cos(N):
+    """
+      the cos() function
+      If the input is a Node instance return Node
+      if the input is a Node_b instance return  Node_b
+      if a scalar n return cos(n)
+      else raise an error
+      """
     if isinstance(N, Node):
         val = np.cos(N.val)
         der = -(np.sin(N.val) * N.der)
@@ -40,6 +54,13 @@ def cos(N):
 
 
 def tan(N):
+    """
+      the tan() function
+      If the input is a Node instance return Node
+      if the input is a Node_b instance return  Node_b
+      if a scalar n return tan(n)
+      else raise an error
+      """
     if isinstance(N, Node):
         val = np.tan(N.val)
         der = 1 / (np.cos(N.val) ** 2) * N.der
@@ -57,6 +78,13 @@ def tan(N):
 
 
 def exp(N):
+    """
+      the exp() function
+      If the input is a Node instance return Node
+      if the input is a Node_b instance return  Node_b
+      if a scalar n return sin(n)
+      else raise an error
+      """
     if isinstance(N, Node):
         val = np.exp(N.val)
         der = np.exp(N.val) * N.der
@@ -74,6 +102,13 @@ def exp(N):
 
 
 def log(N):
+    """
+      the natural log ln function
+      If the input is a Node instance return Node
+      if the input is a Node_b instance return  Node_b
+      if a scalar n return ln(n)
+      else raise an error
+      """
     if isinstance(N, Node):
         val = np.log(N.val)
         der = 1 / N.val * N.der
@@ -92,6 +127,14 @@ def log(N):
 
 
 def arcsin(N):
+    """
+      the arcsin() function
+      If the input is a Node instance return Node
+      if the input is a Node_b instance return  Node_b
+      if a scalar n return arcsin(n)
+      else raise an error
+      Pay attention that arcsin only accept value between -1 and 1
+      """
     if isinstance(N, Node):
         if N.val > 1 or N.val < -1:
             raise ValueError("{} should have values and derivatives -1 <= x <= 1 for arcsin use".format(N))
@@ -113,6 +156,14 @@ def arcsin(N):
    
 
 def arccos(N):
+    """
+      the arccos() function
+      If the input is a Node instance return Node
+      if the input is a Node_b instance return  Node_b
+      if a scalar n return arccos(n)
+      else raise an error
+      Pay attention that arccos only accept value between -1 and 1
+    """
     if isinstance(N, Node):
         if N.val > 1 or N.val < -1 :
             raise ValueError("{} should have values and derivatives -1 <= x <= 1 for arccos use".format(N))
@@ -135,6 +186,13 @@ def arccos(N):
 
 
 def arctan(N):
+    """
+         the arctan() function
+         If the input is a Node instance return Node
+         if the input is a Node_b instance return  Node_b
+         if a scalar n return arctan(n)
+         else raise an error
+         """
     if isinstance(N, Node):
         val = np.arctan(N.val)
         der = 1 / (N.val**2 + 1) * N.der
@@ -152,6 +210,13 @@ def arctan(N):
 
 
 def sinh(N):
+    """
+         the sinh() function
+         If the input is a Node instance return Node
+         if the input is a Node_b instance return  Node_b
+         if a scalar n return sinh(n)
+         else raise an error
+         """
     if isinstance(N, Node):
         val = np.sinh(N.val)
         der = np.cosh(N.val) * N.der
@@ -169,6 +234,13 @@ def sinh(N):
 
 
 def cosh(N):
+    """
+           the cosh() function
+           If the input is a Node instance return Node
+           if the input is a Node_b instance return  Node_b
+           if a scalar n return cosh(n)
+           else raise an error
+           """
     if isinstance(N, Node):
         val = np.cosh(N.val)
         der = np.sinh(N.val) * N.der
@@ -186,6 +258,13 @@ def cosh(N):
 
 
 def tanh(N):
+    """
+           the tanh() function
+           If the input is a Node instance return Node
+           if the input is a Node_b instance return  Node_b
+           if a scalar n return tanh(n)
+           else raise an error
+           """
     if isinstance(N, Node):
         val = np.tanh(N.val)
         der = (1-np.tanh(N.val)**2) * N.der
@@ -204,6 +283,13 @@ def tanh(N):
 
 
 def sqrt(N):
+    """
+           the sqrt() function
+           If the input is a Node instance return Node
+           if the input is a Node_b instance return  Node_b
+           if a scalar n return sqrt(n)
+           else raise an error
+           """
     if isinstance(N, Node):
         val = np.sqrt(N.val)
         der = 0.5 * (N.val ** -0.5) * N.der
@@ -222,6 +308,13 @@ def sqrt(N):
 
 
 def logistic(N):
+    """
+           the sigmoid function
+           If the input is a Node instance return Node
+           if the input is a Node_b instance return  Node_b
+           if a scalar n return logistic(n)
+           else raise an error
+           """
     if isinstance(N, Node):
         val = np.exp(N.val) / (np.exp(N.val) + 1)
         der = ( np.exp(-N.val) / (1+np.exp(-N.val))**2 ) * N.der
@@ -241,6 +334,16 @@ def logistic(N):
 
 
 def logb(b, N):
+    """
+            input:
+            b:base,a integer or float
+            N:node,node_b or scalar
+           the log function for any base
+           If the input is a Node instance return Node
+           if the input is a Node_b instance return  Node_b
+           if a scalar n return logb(n)
+           else raise an error
+           """
     try:
         float(b)
         if isinstance(N,Node):
@@ -262,6 +365,16 @@ def logb(b, N):
         raise ValueError("the base of a logb should be an int or a float")
 
 def power(b,N):
+    """
+            input:
+            b:base,a integer or float
+            N:node,node_b or scalar
+           the exponential unction for any base
+           If the input is a Node instance return Node
+           if the input is a Node_b instance return  Node_b
+           if a scalar n return b**n
+           else raise an error
+           """
     try:
         float(b)
         if isinstance(N,Node):

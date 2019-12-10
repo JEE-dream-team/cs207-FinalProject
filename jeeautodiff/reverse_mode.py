@@ -7,11 +7,13 @@ class Reverse_mode:
     def create_variable(self, val):
         if self.count >= self.dimension:
             raise Exception("Can not create more variable than pre-specified value")
+        #scalar case
         try:
             float(val)
             self.count+=1
             #position of the seed
             return Node_b(val)
+        #vector case
         except:
                 #check if user trying to create more variables than pre-specified dimension
                 if self.count+len(val)>self.dimension:
@@ -179,13 +181,16 @@ class Node_b:
         return self.val == other.val and self.grad == other.grad
 
     def backward(self, signal=1.0):
+        #back propagation
         self._grad = signal
         root_node = backprop(self, signal)
         return root_node
 
 def backprop(node, signal):
+    #loop through all parents recursively and do the back propagation
     if node.parents is None:
         return node
+    # track the root node so that we can reset that to use the variable again
     ls=[]
     for p, s in node.parents:
         new_signal = s*signal
