@@ -113,7 +113,7 @@ You can just import them as usual in python:
 ### Instantiating AD(Forward Mode) objects
 Users will instantiate AD objects by creating instances of the relevant class and passing variables into the methods of that instance. They need to specify the number of variables they want to use in the AD object,that will specify the shape of the gradient.The default number is one:
 
-```a=ad.autodiff(3)```
+```a=ad.Autodiff(3)```
 
 Passing a “3” into the instance allowes the user to initiate at most 3 variables in this autodiff instance.
 
